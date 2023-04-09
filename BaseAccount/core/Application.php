@@ -34,13 +34,8 @@ class Application
 
         $primaryValue = $this->session->get('user');
         //var_dump($primaryValue).PHP_EOL;
-        if ($primaryValue) {
-            //var_dump($this->userClass::primaryKey());            
-            $this->user = $this->user->findOneById([ 'id' => $primaryValue]);
-            //var_dump($this->user);
-            // $primaryKey = $this->userClass::primaryKey();
-            
-            // $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
+        if ($primaryValue) {                      
+            $this->user = $this->user->findOneById([ 'id' => $primaryValue]);        
         } else {
             $this->user = null;
         }

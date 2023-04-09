@@ -11,26 +11,30 @@ class Router
     public Respone $response;
     protected array $routes = [];
 
-    public function __construct(Request $request, Respone $respone) {
+    public function __construct(Request $request, Respone $respone)
+    {
         $this->request = $request;
         $this->response = $respone;
     }
 
-    public function get($path, $callback) {
+    public function get($path, $callback)
+    {
         $this->routes['get'][$path] = $callback;
     }
 
-    public function post($path, $callback) {
+    public function post($path, $callback)
+    {
         $this->routes['post'][$path] = $callback;
     }
-    
-    public function resolve(){
+
+    public function resolve()
+    {
         $path = $this->request->getPath();
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
-            $this->response->setStatusCode('404'); 
-            return $this->renderView('_404');        
+            $this->response->setStatusCode('404');
+            return $this->renderView('_404');
         }
 
         //if callback is a view file
@@ -38,42 +42,52 @@ class Router
             return $this->renderView($callback);
         }
 
-        if (is_array($callback)) {
-           Application::$app->controller = new $callback[0]; // controller name
-           $callback[0] = Application::$app->controller;
+        if (is_array($callback)) {             
+            /**@var Controller $controller */
+            $controller = new $callback[0](); // controller name            
+            Application::$app->controller = $controller;
+            $controller->action = $callback[1]; // action = profile, login, register ...
+            $callback[0] = $controller;
+            foreach ($controller->getMiddleware() as $middleware) {
+                $middleware->execute();
+            }
         }
 
         return call_user_func($callback, $this->request, $this->response);
     }
 
-    public function renderView($view, $params = []) {
+    public function renderView($view, $params = [])
+    {
         $layoutContent = $this->layoutContent();
         $viewContent = $this->renderOnlyView($view, $params);
-        return str_replace('{{content}}', $viewContent, $layoutContent);       
+        return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
-    public function renderContent($viewContent) {
-        $layoutContent = $this->layoutContent();        
-        return str_replace('{{content}}', $viewContent, $layoutContent);       
+    public function renderContent($viewContent)
+    {
+        $layoutContent = $this->layoutContent();
+        return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
-    public function layoutContent() {
+    public function layoutContent()
+    {
         $layout = Application::$app->layout;
         if (Application::$app->controller) {
             $layout = Application::$app->controller->layout;
         }
-        
+
         ob_start();
-        include_once(Application::$ROOT_DIR."/views/layouts/$layout.php");
+        include_once(Application::$ROOT_DIR . "/views/layouts/$layout.php");
         return ob_get_clean();
     }
 
-    public function renderOnlyView($view, $params) {
+    public function renderOnlyView($view, $params)
+    {
         foreach ($params as $key => $value) {
             $$key = $value; // $key = name => $$key = $name
         }
         ob_start();
-        include_once(Application::$ROOT_DIR."/views/$view.php");
+        include_once(Application::$ROOT_DIR . "/views/$view.php");
         return ob_get_clean();
     }
 }

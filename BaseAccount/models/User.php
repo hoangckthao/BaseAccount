@@ -72,6 +72,69 @@ class User extends DbModel
        // var_dump($this->firstName.' '.$this->lastName).PHP_EOL;
         return $this->firstName.' '.$this->lastName;
     }
+
+    /**
+     * Get the value of image
+     *
+     * @return string
+     */
+    public function getImage(): string {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @param string $image
+     *
+     * @return self
+     */
+    public function setImage(string $image): self {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * Get the value of address
+     *
+     * @return string
+     */
+    public function getAddress(): string {
+        return $this->address;
+    }
+
+    /**
+     * Set the value of address
+     *
+     * @param string $address
+     *
+     * @return self
+     */
+    public function setAddress(string $address): self {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * Get the value of phone
+     *
+     * @return string
+     */
+    public function getPhone(): string {
+        return $this->phone;
+    }
+
+    /**
+     * Set the value of phone
+     *
+     * @param string $phone
+     *
+     * @return self
+     */
+    public function setPhone(string $phone): self {
+        $this->phone = $phone;
+        return $this;
+    }
 }
 
 ?>
