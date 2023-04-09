@@ -35,5 +35,8 @@ $app->router->post('/profile', [AuthController::class, 'profile']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->post('/logout', [AuthController::class, 'logout']);
 
+$app->router->get('/editProfile', [AuthController::class, 'editProfile']);
+$app->router->post('/editProfile', [AuthController::class, 'editProfile']);
+
 $app->run();
 ?>

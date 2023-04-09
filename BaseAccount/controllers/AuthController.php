@@ -5,6 +5,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\DbModel;
 use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
 use app\core\Respone;
@@ -57,14 +58,33 @@ class AuthController extends Controller
     }
 
     public function profile(Request $request, Respone $respone) {
-        $user = new User();
-        var_dump($request).PHP_EOL;    
+        $user = new User();        
         $user->loadData($request->getBody()); 
         //var_dump($user).PHP_EOL;                       
         $this->setLayout('auth');
         return $this->render('profile', [
             'userP' => $user,
         ]);
+    }
+
+    public function editProfile(Request $request, Respone $respone) {
+        $user = new User();
+        if ($request->isPost()) {
+            
+            $user->loadData($request->getBody());
+            //$user2 = DbModel::findOne(['email' =>$user->getEmail()]);
+
+            var_dump($user).PHP_EOL;
+            if ($user->validate() && $user->upgradeByEmail($user->getEmail())) {                
+                Application::$app->session->setFlash('success', 'Edit successfully!');
+                Application::$app->respone->redirect('/profile');
+                var_dump($user).PHP_EOL;
+                return;                
+            }
+            return $this->render('profile', ['model' => $user]);
+        }
+        $this->setLayout('auth');
+        return $this->render('profile', ['model' => $user]);
     }
 }
 

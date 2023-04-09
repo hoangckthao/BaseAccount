@@ -1,7 +1,9 @@
+<?php ?>
 <div class="container" style="display: block;">
     <div class="alert alert-danger" role="alert">
         <h1>
-            404 - Not Found
+            <?php echo $exception->getCode() ?> -
+            <?php echo $exception->getMessage() ?>
         </h1>
     </div>
     <button type="button" class="btn btn-success"><a href="/login" style="color: white;">Go back to login page</a></button>

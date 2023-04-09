@@ -26,6 +26,21 @@ abstract class DbModel extends Model
         $statement->execute();
     }
 
+    public function upgradeByEmail($where) {
+        $tableName = $this->tableName();
+        $attributes = $this->attributes();
+        $attributeEmail = array_keys($where);
+        $sql = array_map(fn($attr) => "$attr = :$attr", $attributeEmail);
+        $params = array_map(fn($attr) => ":$attr", $attributes);
+        $statement = self::prepare("UPDATE $tableName SET (".implode(',',$params).") WHERE $sql");
+        //var_dump($statement, $params, $attributes).PHP_EOL;
+        foreach ($attributes as $attribute) {
+            $statement->bindValue(":$attribute", $this->{$attribute});
+        }
+        var_dump($statement);
+        $statement->execute();
+    }
+
     public static function prepare($sql) {
         return Application::$app->db->pdo->prepare($sql);
     }
