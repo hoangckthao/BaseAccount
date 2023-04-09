@@ -1,0 +1,18 @@
+{
+    "name": "asus/base-account",
+    "autoload": {
+        "psr-4": {
+            "Asus\\BaseAccount\\": "src/",
+            "app\\":"./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tran Phu Cuong",
+            "email": "hoangckthao33@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}

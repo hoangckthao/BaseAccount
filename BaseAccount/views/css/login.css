@@ -1,0 +1,10 @@
+.loginPage {
+    display: block;
+    max-width: 550px;
+    margin: auto;
+    padding: 20px;
+}
+
+.auth-sub-title{
+    color:red;
+}

@@ -1,0 +1,103 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 09, 2023 lúc 06:29 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `baseaccount`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(11) NOT NULL,
+  `migration` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `created_at`) VALUES
+(1, 'm0001_initial.php', '2023-04-09 03:56:58');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `firstName` text NOT NULL,
+  `lastName` text NOT NULL,
+  `email` text NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `image` text DEFAULT 'https://th.bing.com/th/id/OIP.zRG7_6cFjh5TdxTbdW_SkgHaH_?pid=ImgDet&rs=1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `user`
+--
+
+INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `phone`, `address`, `image`) VALUES
+(1, 'Trần Phú', 'Cường', 'hoangckthao33@gmail.com', '$2y$10$f.0gmFE1CYfLjz1Z64C0v.u/inGLkGC1MNipF09MiPQPzVvfRBWm.', '0913096351', 'Base', 'https://th.bing.com/th/id/OIP.zRG7_6cFjh5TdxTbdW_SkgHaH_?pid=ImgDet&rs=1');
+
+--
+-- Chỉ mục cho các bảng đã đổ
+--
+
+--
+-- Chỉ mục cho bảng `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`) USING HASH;
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
