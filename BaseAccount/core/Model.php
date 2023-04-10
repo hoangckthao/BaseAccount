@@ -19,8 +19,10 @@ abstract class Model
             if (property_exists($this, $key)) {
                 if ($key === 'email') {
                     $user1 = User::findOneIdByEmail(['email' => $value]);
-                    $id = $user1->{'id'};                    
-                    $this->{'id'} = $id;
+                    if ($user1) {
+                        $id = $user1->{'id'};                    
+                        $this->{'id'} = $id;
+                    }
                 }
                 $this->{$key} = $value;
             }

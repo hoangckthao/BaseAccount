@@ -33,10 +33,11 @@ class Application
         $this->db = new Database($config['db']);
         $this->user = new User();
 
-        $primaryValue = $this->session->get('user');
+        $primaryValue = $this->session->get('user');        
         //var_dump($primaryValue).PHP_EOL;
-        if ($primaryValue) {                      
-            $this->user = $this->user->findOneById([ 'id' => $primaryValue]);        
+        if ($primaryValue) {  
+            
+            if ($this->user->findOneById(['id' => $primaryValue]))$this->user = $this->user->findOneById(['id' => $primaryValue]);        
         } else {
             $this->user = null;
         }

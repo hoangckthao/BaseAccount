@@ -83,16 +83,17 @@ abstract class DbModel extends Model
     }
 
     public static function findOneById($where) {
-        // $tableName = static::tableName();
-        $attributes = array_keys($where); //return all the key of the array (email)
+        // $tableName = static::tableName();    
+        $attributes = array_keys($where); //return all the key of the array (email)        
         $sql = implode("AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)); // SELECT * FROM `user` WHERE id = '1';
+        
         $statement = self::prepare("SELECT * FROM user WHERE $sql");
         //var_dump($statement, $params, $attributes).PHP_EOL;
-        foreach ($where as $key => $item) {
+        foreach ($where as $key => $item) {            
             $statement->bindValue(":$key", $item);
-        }
-        $statement->execute();
+        } 
         
+        $statement->execute();               
         return $statement->fetchObject(static::class);
     }
 
