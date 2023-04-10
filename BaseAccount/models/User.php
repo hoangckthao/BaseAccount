@@ -177,6 +177,27 @@ class User extends DbModel
         $this->firstName = $firstName;
         return $this;
     }
+
+    /**
+     * Get the value of id
+     *
+     * @return string
+     */
+    public function getId(): string {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param string $id
+     *
+     * @return self
+     */
+    public function setId(string $id): self {
+        $this->id = $id;
+        return $this;
+    }
 }
 
 ?>

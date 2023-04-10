@@ -26,18 +26,27 @@ abstract class DbModel extends Model
         $statement->execute();
     }
 
-    public function upgradeByEmail($where) {
+    public function upgradeByEmail($where, $user) {
         $tableName = $this->tableName();
-        $attributes = $this->attributes();
+        $attributes2 = [];
+        foreach ($user as $key => $item) {
+            if ($key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" )$attributes[] = $key;
+        }  
+        foreach ($user as $key => $item) {
+            if ($key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" )$attributes2[$key] = $item;
+        }   
+        
         $attributeEmail = array_keys($where);
-        $sql = array_map(fn($attr) => "$attr = :$attr", $attributeEmail);
-        $params = array_map(fn($attr) => ":$attr", $attributes);
-        $statement = self::prepare("UPDATE $tableName SET (".implode(',',$params).") WHERE $sql");
-        //var_dump($statement, $params, $attributes).PHP_EOL;
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
-        }
-        var_dump($statement);
+        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributeEmail));
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);        
+        $statement = self::prepare("UPDATE $tableName SET ".implode(',',$params)."  WHERE $sql");              
+        foreach ($attributes2 as $key => $item) {      
+            if ($key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" ) $statement->bindValue(":$key", $item);            
+        }         
+        
+        foreach ($where as $key => $item) {      
+            $statement->bindValue(":$key", $item);
+        }              
         $statement->execute();
     }
 

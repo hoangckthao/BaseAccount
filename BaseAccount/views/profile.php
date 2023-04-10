@@ -113,7 +113,7 @@ use app\core\Application;
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">EDIT PERSONAL PROFILE</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/editProfile" method="post">
+            <form action="/profile" method="post" enctype="multipart/form-data">>
                 <div class="modal-body">
 
 
@@ -146,7 +146,7 @@ use app\core\Application;
                                 <td>
                                     <input class="form-control" type="email" name="email"
                                         value="<?php echo $userP->getEmail() ?>"
-                                        style="font-size: 16px; margin-bottom: 10px;" disabled>
+                                        style="font-size: 16px; margin-bottom: 10px;" readonly>
                                 </td>
                             </tr>
 
@@ -194,3 +194,9 @@ use app\core\Application;
         </div>
     </div>
 </div>
+
+<script>
+    var fileInput = document.getElementById("formFile");
+    fileInput.defaultValue = "https://th.bing.com/th/id/OIP.zRG7_6cFjh5TdxTbdW_SkgHaH_?pid=ImgDet&rs=1";
+</script>
+

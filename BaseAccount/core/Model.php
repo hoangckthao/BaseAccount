@@ -18,7 +18,8 @@ abstract class Model
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 if ($key === 'email') {
-                    $id = User::findOneIdByEmail(['email' => $value]);
+                    $user1 = User::findOneIdByEmail(['email' => $value]);
+                    $id = $user1->{'id'};                    
                     $this->{'id'} = $id;
                 }
                 $this->{$key} = $value;
@@ -72,6 +73,36 @@ abstract class Model
                 }
             }
         }
+        return empty($this->errors);
+    }
+
+    public function validatePhone() {
+        foreach ($this->rules() as $attribute => $rules) { //each attributes correspond to some rules
+            
+            $value = $this->{$attribute};            
+            foreach ($rules as $rule) {
+                $ruleName = array();                
+                
+                if (is_array($rule)) { //array (more than 1 rule)
+                    $ruleName[0] = $rule[0];                    
+                }              
+                else {
+                    $ruleName[0] = $rule;
+                }            
+                
+                // if (!empty($rule['min'])) {var_dump($rule['min']) ;echo $rule['min'];}
+                if ($ruleName[0] === self::RULE_MIN && !empty($rule['min']) && strlen($value) < $rule['min'] && ($attribute === "phone" || $attribute === "address") ) {
+                    
+                    $this->addErrorForRule($attribute, self::RULE_MIN, $rule);
+                }
+                if ($ruleName[0] === self::RULE_MAX && !empty($rule['max']) && strlen($value) > $rule['max'] && ($attribute === "phone" || $attribute === "address")) {
+                    
+                    $this->addErrorForRule($attribute, self::RULE_MAX, $rule);
+                }
+                
+            }
+        }
+        //var_dump($this->errors);
         return empty($this->errors);
     }
 

@@ -72,19 +72,19 @@ class AuthController extends Controller
         if ($request->isPost()) {
             
             $user->loadData($request->getBody());
-            //$user2 = DbModel::findOne(['email' =>$user->getEmail()]);
-
-            var_dump($user).PHP_EOL;
-            if ($user->validate() && $user->upgradeByEmail($user->getEmail())) {                
-                Application::$app->session->setFlash('success', 'Edit successfully!');
-                Application::$app->respone->redirect('/profile');
-                var_dump($user).PHP_EOL;
-                return;                
+            $user2 = User::findOne(['id' =>$user->getId()]);                                    
+            if ($user->validatePhone() && $user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
+                $user2 = User::findOne(['id' =>$user->getId()]);                 
+                //Application::$app->session->setFlash('success', 'Edit successfully!');
+                //Application::$app->respone->redirect('/profile');
+                //var_dump($user).PHP_EOL;
+                return $this->render('profile', ['userP' => $user2]);     
+                     
             }
-            return $this->render('profile', ['model' => $user]);
+            return $this->render('profile', ['userP' => $user2]);
         }
         $this->setLayout('auth');
-        return $this->render('profile', ['model' => $user]);
+        return $this->render('profile', ['userP' => $user]);
     }
 }
 
