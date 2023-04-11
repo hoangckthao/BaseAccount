@@ -16,7 +16,7 @@
                         <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 15px;">Email</div>
                         <input class="form-control <?php echo $model->hasError('email') ? 'is-invalid' : '' ?>" type="text" name="email" placeholder="Your email" style="font-size: 16px; padding: 6px" required>
                         <div class="invalid-feedback">
-                            <?php echo $model->getFirstError('email') ?> 
+                            <?php echo $model->getFirstError('email') ?? '' ?> 
                         </div>
                     </div>
         
@@ -31,7 +31,7 @@
                         
                         <input class="form-control <?php echo $model->hasError('password') ? 'is-invalid' : '' ?>" type="password" name="password" placeholder="Your password" style="font-size: 16px; padding: 6px" required>
                         <div class="invalid-feedback">
-                            <?php echo $model->getFirstError('password') ?> 
+                            <?php echo $model->getFirstError('password') ?? '' ?> 
                         </div>
                     </div>
                     

@@ -19,11 +19,11 @@ abstract class DbModel extends Model
         $params = array_map(fn($attr) => ":$attr", $attributes);
         $statement = self::prepare("INSERT INTO $tableName (".implode(',', $attributes).") 
             VALUES(".implode(',',$params).") ");
-        //var_dump($statement, $params, $attributes).PHP_EOL;
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
-        $statement->execute();
+        
+        return $statement->execute();
     }
 
     public function upgradeByEmail($where, $user) {
@@ -47,6 +47,31 @@ abstract class DbModel extends Model
         foreach ($where as $key => $item) {      
             $statement->bindValue(":$key", $item);
         }              
+        $statement->execute();
+    }
+
+    public function upgradePasswordByEmail($password, $user) {
+        $tableName = $this->tableName();
+        $attribute = [
+            'email' => $user->getEmail()
+        ];         
+        
+        $attributePassword = array_keys($password);
+        $attributeEmail = array_keys($attribute);
+        $sql = array_map(fn($attr) => "$attr = :$attr", $attributePassword);
+
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributeEmail);   
+        //var_dump($params);     
+        $statement = self::prepare("UPDATE $tableName SET ".implode(',',$sql)."  WHERE ".implode(',',$params)." ");              
+        foreach ($attribute as $key => $item) {      
+             $statement->bindValue(":$key", $item);            
+        }         
+        
+        foreach ($password as $key => $item) {   
+            //password hash   
+            $statement->bindValue(":$key", $item);
+        }            
+        //var_dump($statement) ;
         $statement->execute();
     }
 

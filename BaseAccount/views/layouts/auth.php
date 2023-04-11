@@ -20,7 +20,12 @@ use app\core\Application;
     if (Application::$app->session->getFlash('success')):
         ?>
         <div class="alert alert-success">
-            <?php echo Application::$app->session->getFlash('success') ?>
+            <?php 
+                echo Application::$app->session->getFlash('success')?? '';   
+                Application::$app->session->remove('success');
+                //var_dump(Application::$app->session);
+            ?>
+            
         </div>
     <?php
     endif;

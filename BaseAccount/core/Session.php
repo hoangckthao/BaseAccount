@@ -11,7 +11,7 @@ class Session
         foreach ($flashMessages as $key => &$flashMessage) { //pass by reference (thay đổi chỉ diễn ra ở cookie array mà cần thay đổi ở actual array, chỉ có tham số là thứ bị thay đổi)
             // Mark to be removed
             $flashMessage['remove'] = true;
-        }
+        }        
         $_SESSION[self::FLASH_KEY] = $flashMessages;        
     }
 
@@ -20,9 +20,12 @@ class Session
             'remove' => false,
             'value' => $message
         ];
+        
+        
     }
 
     public function getFlash($key) {
+        //var_dump($_SESSION[self::FLASH_KEY][$key]['value']);
         return $_SESSION[self::FLASH_KEY][$key]['value'] ?? false;
     }
 

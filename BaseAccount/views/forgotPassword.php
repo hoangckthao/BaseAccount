@@ -14,19 +14,12 @@
                 <div class="form">
                     <div class="row">
                         <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 15px;">Email</div>
-                        <input class="form-control <?php //echo $model->hasError('email') ? 'is-invalid' : '' ?>" type="text" name="email" placeholder="Your email" style="font-size: 16px; padding: 6px" required>
+                        <input class="form-control <?php echo $model->hasError('email') ? 'is-invalid' : '' ?>" type="text" name="email" placeholder="Your email" style="font-size: 16px; padding: 6px" required>
                         <div class="invalid-feedback">
-                            <?php // echo $model->getFirstError('email') ?> 
+                            <?php  echo $model->getFirstError('email') ?> 
                         </div>
                     </div>
-        
-                    <div class="row" style="padding-bottom: 20px;">                                                
-                        <input class="form-control <?php //echo $model->hasError('securityCode') ? 'is-invalid' : '' ?>" type="text" name="securityCode" placeholder="Enter the security code below" style="font-size: 16px; padding: 6px" required>
-                        <div class="invalid-feedback">
-                            <?php // echo $model->getFirstError('securityCode') ?> 
-                        </div>
-                    </div>
-                    
+                                        
         
 
                     <div class="row relative xo" style="position: relative;">
