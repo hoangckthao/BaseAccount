@@ -16,7 +16,7 @@ class User extends DbModel
     public string $passwordConfirm='';
     public string $phone='';
     public string $address='';
-    public string $image;
+    public string $image='';
     
     public function tableName(): string{
         return 'user';

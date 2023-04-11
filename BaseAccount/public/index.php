@@ -20,7 +20,7 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
-$app->router->get('/', [AuthController::class, 'profile']);
+$app->router->get('/', [AuthController::class, 'login']);
 
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'handleContact']);
@@ -36,6 +36,9 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->post('/logout', [AuthController::class, 'logout']);
 
 $app->router->post('/profile', [AuthController::class, 'editProfile']);
+$app->router->get('/profile', [AuthController::class, 'editProfile']);
+$app->router->post('/forgotPassword', [AuthController::class, 'forgotPassword']);
+$app->router->get('/forgotPassword', [AuthController::class, 'forgotPassword']);
 
 $app->run();
 ?>

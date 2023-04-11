@@ -1,7 +1,6 @@
 <?php
 use app\core\Application;
 
-//var_dump($userP);
 ?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: lightgray;">
     <div class="container-fluid">
@@ -62,6 +61,13 @@ use app\core\Application;
                 </div>
     </div>
 </nav>
+<?php 
+
+    if (Application::isGuest()) {
+        
+    }
+
+?>
 <div class="container-fluid" style="display: flex; margin-top:30px">
     <div class="container" style="width: 30%;">
 

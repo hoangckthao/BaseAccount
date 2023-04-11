@@ -9,13 +9,15 @@ use app\core\DbModel;
 use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
 use app\core\Respone;
+use app\models\ForgotPassword;
 use app\models\LoginForm;
 use app\models\User;
+use app\models\ForgotPasswordForm;
 
 class AuthController extends Controller 
 {
     public function __construct() {
-        $this-> registerMiddleware(new AuthMiddleware(['profile']));
+        $this-> registerMiddleware(new AuthMiddleware(['profile', 'editProfile']));
     }
     public function login(Request $request, Respone $respone) {
         $loginForm = new LoginForm();
@@ -86,6 +88,24 @@ class AuthController extends Controller
         $this->setLayout('auth');
         return $this->render('profile', ['userP' => $user]);
     }
+
+    public function forgotPassword(Request $request, Respone $respone) {
+        $forgotPasswordForm = new ForgotPasswordForm();
+        if ($request->isPost()) {
+            $forgotPasswordForm->loadData($request->getBody());
+            if ($forgotPasswordForm->validate() && $forgotPasswordForm->login()) { 
+                $emailRecover = $forgotPasswordForm->{'email'};
+                $userP = User::findOne(['email' => $emailRecover]);
+                
+                $this->setLayout('auth');               
+                return $this->render('forgotPassword');
+            }
+        }
+        $this->setLayout('auth');
+        return $this->render('forgotPassword');
+    }
+
+
 }
 
 

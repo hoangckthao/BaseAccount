@@ -28,7 +28,8 @@ class Router
     }
 
     public function resolve()
-    {
+    {   
+        
         $path = $this->request->getPath();
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
@@ -43,12 +44,13 @@ class Router
         }
 
         if (is_array($callback)) {             
-            /**@var Controller $controller */
+            /** @var \app\core\Controller $controller */
             $controller = new $callback[0](); // controller name            
             Application::$app->controller = $controller;
             $controller->action = $callback[1]; // action = profile, login, register ...
             $callback[0] = $controller;
             foreach ($controller->getMiddleware() as $middleware) {
+                // $middleware = 'profile'                
                 $middleware->execute();
             }
         }

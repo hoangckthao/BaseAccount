@@ -14,9 +14,10 @@ class AuthMiddleware extends BaseMiddleware
 
     public function execute() {
         //var_dump(Application::isGuest());
-        if (Application::isGuest()) {
-               
-            if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)) { //the middleware work for all action and the current action                
+        if (Application::isGuest()) {               
+            //var_dump($this->actions);
+            if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)) { //the middleware work for all action and the current action                                
+                
                 throw new ForbiddenException();
                 
             }

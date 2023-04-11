@@ -13,7 +13,7 @@
                     Welcome back. Login to start working.</div>
                 <div class="form">
                     <div class="row">
-                        <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 13px;">Email</div>
+                        <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 15px;">Email</div>
                         <input class="form-control <?php echo $model->hasError('email') ? 'is-invalid' : '' ?>" type="text" name="email" placeholder="Your email" style="font-size: 16px; padding: 6px" required>
                         <div class="invalid-feedback">
                             <?php echo $model->getFirstError('email') ?> 
@@ -21,7 +21,14 @@
                     </div>
         
                     <div class="row" style="padding-bottom: 20px;">
-                        <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 13px;">Password</div>
+                        <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 15px;">
+                            Password
+                            <div class="float-end" style="font-weight: 400; font-size: 15px;">
+                                <a href="/forgotPassword" class="link-underline-primary">Forgot password? Click here</a>
+                            </div>
+                            
+                        </div> 
+                        
                         <input class="form-control <?php echo $model->hasError('password') ? 'is-invalid' : '' ?>" type="password" name="password" placeholder="Your password" style="font-size: 16px; padding: 6px" required>
                         <div class="invalid-feedback">
                             <?php echo $model->getFirstError('password') ?> 
