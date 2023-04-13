@@ -85,8 +85,19 @@
                     //data =JSON.parse(data);
                     console.log(data['errors']);
                     if (data['errors']) {
-                        if (data['errors']['email']) document.getElementById("email-warning").innerHTML = data['errors']['email'];
-                        if (data['errors']['password']) document.getElementById("email-warning").innerHTML = data['errors']['password'];
+                        if (data['errors']['email']) {
+                            document.getElementById("email-warning").innerHTML = data['errors']['email'];
+                            document.getElementById("password-warning").innerHTML = '';
+                        } 
+                        if (data['errors']['password']) 
+                        {
+                            document.getElementById("email-warning").innerHTML = '';
+                            document.getElementById("password-warning").innerHTML = data['errors']['password'];
+                        }
+                    }
+                    else {
+                        alert("Login successfull!")
+                        window.location = "/profile";
                     }
                     // if (data['errors'])
 

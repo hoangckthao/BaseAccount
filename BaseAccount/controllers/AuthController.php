@@ -59,7 +59,8 @@ class AuthController extends Controller
                     return $json;
                 } 
                 else {
-                    
+                    $json = json_encode($loginForm);
+                    return $json; 
                 }    
                 
             }
