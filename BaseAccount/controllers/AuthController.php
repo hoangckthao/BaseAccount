@@ -34,12 +34,40 @@ class AuthController extends Controller
                 // chi hien thi trang profile chu ko link toi trang profile
                 $this->setLayout('auth');
                 return $this->render('profile', ['userP' => $userP]);
-                
             }
             $this->setLayout('auth');
             return $this->render('login', [
                 'model' => $loginForm,
             ]);
+        }
+        $this->setLayout('auth');
+        return $this->render('login', [
+            'model' => $loginForm,
+        ]);
+    }
+
+    public function loginWithAjax(Request $request, Respone $respone)
+    {
+        $loginForm = new LoginForm();
+        if ($request->isPost()) {
+            $loginForm->loadData($request->getBody());
+            if ($loginForm->validate()) {
+                if ($loginForm->login()) {
+                    $emailLogin = $loginForm->{'email'};
+                    $userP = User::findOne(['email' => $emailLogin]);
+                    $json = json_encode($userP);                   
+                    return $json;
+                } 
+                else {
+                    
+                }    
+                
+            }
+            else {
+                $json = json_encode($loginForm);
+                return $json;
+
+            }
         }
         $this->setLayout('auth');
         return $this->render('login', [
@@ -141,19 +169,18 @@ class AuthController extends Controller
     public function editProfileAjax(Request $request, Respone $respone)
     {
         $userP = new User();
-        $user = new User();        
+        $user = new User();
         $user->loadData($request->getBody());
-        
+
         $userP = User::findOne(['email' => $user->getEmail()]);
         if ($request->isPost()) {
-            if ($user->validatePhone()) {                
+            if ($user->validatePhone()) {
                 if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
                     $json = json_encode($user);
-                    
+
                     echo $json;
                     return;
-                }                           
-                else echo "Update failed";
+                } else echo "Update failed";
             }
         }
         $this->setLayout('auth');

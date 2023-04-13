@@ -6,17 +6,15 @@
             </a>
         </div>
         <div class="loginBox">
-            <form id="authform" action="" method="post">
+            <form id="authForm" action="">
                 <h1 style="padding: 35px 0px 8px 0px; text-align: center; font-size: 24px; font-weight: 500;">Login</h1>
                 <div class="auth-sub-title" style="color: #888; font-size: 14px; text-align: center; padding-bottom: 20px; border-bottom: 2px solid #eee;">
                     Welcome back. Login to start working.</div>
                 <div class="form">
                     <div class="row">
                         <div class="label" style="margin-top: 10px;padding-bottom: 10px; font-weight: bold; font-size: 15px;">Email</div>
-                        <input class="form-control <?php echo $model->hasError('email') ? 'is-invalid' : '' ?>" type="text" name="email" placeholder="Your email" style="font-size: 16px; padding: 6px" required>
-                        <div class="invalid-feedback">
-                            <?php echo $model->getFirstError('email') ?? '' ?>
-                        </div>
+                        <input class="form-control" type="email" name="email" placeholder="Your email" id="email" style="font-size: 16px; padding: 6px" required>
+                        <span id="email-warning" style="color:red"></span>
                     </div>
 
                     <div class="row" style="padding-bottom: 20px;">
@@ -28,10 +26,8 @@
 
                         </div>
 
-                        <input class="form-control <?php echo $model->hasError('password') ? 'is-invalid' : '' ?>" type="password" name="password" placeholder="Your password" style="font-size: 16px; padding: 6px" required>
-                        <div class="invalid-feedback">
-                            <?php echo $model->getFirstError('password') ?? '' ?>
-                        </div>
+                        <input class="form-control" type="password" name="password" placeholder="Your password" id="password" minlength="8" maxlength="30" style="font-size: 16px; padding: 6px" required>
+                        <span id="password-warning" style="color:red"></span>
                     </div>
 
 
@@ -40,7 +36,7 @@
                         <div class="checkbox" style="position: absolute;font-size: 13px; color: #888; left: 0px; top: 0px;">
                             <input type="checkbox" checked="" name="saved"> &nbsp; Keep me logged in
                         </div>
-                        <button class="submit" style="background-color: #2bd14e; font-size: 14px;font-weight: bold;color: #fff;cursor: pointer;text-align: center;padding: 11px 25px; border-radius: 3px; margin-top: 40px;">Login to start working</button>
+                        <button id="submitLoginForm" type="button" style="background-color: #2bd14e; font-size: 14px;font-weight: bold;color: #fff;cursor: pointer;text-align: center;padding: 11px 25px; border-radius: 3px; margin-top: 40px;">Login to start working</button>
                     </div>
 
                     <div style="display: flex; flex-direction: column; padding-bottom: 50px; border-bottom:2px solid #eee">
@@ -57,7 +53,7 @@
 
                     </div>
 
-                    <div class="row" style="margin-top: 16px; font-size: 14px;" >
+                    <div class="row" style="margin-top: 16px; font-size: 14px;">
                         <a style="text-align: center; font-weight: normal;color: #267cde;" href="/register">Not have an account yet? Go to register</a>
                     </div>
                 </div>
@@ -70,3 +66,48 @@
         <img style="max-width: 100%; height: auto;" src="https://static-gcdn.basecdn.net/account/image/background.png" alt="Hinh anh minh hoa">
     </div>
 </div>
+
+<script>    
+
+    $(document).ready(function() {
+        $('#submitLoginForm').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'login',
+                type: 'POST',
+                data: {
+                    email: $('#email').val(),
+                    password: $('#password').val(),                    
+                },
+
+                dataType: 'json',
+                success: function(data) {
+                    //data =JSON.parse(data);
+                    console.log(data['errors']);
+                    if (data['errors']) {
+                        if (data['errors']['email']) document.getElementById("email-warning").innerHTML = data['errors']['email'];
+                        if (data['errors']['password']) document.getElementById("email-warning").innerHTML = data['errors']['password'];
+                    }
+                    // if (data['errors'])
+
+                    // document.getElementById("fullNameMain").innerHTML = data['firstName'] + ' ' + data['lastName'];
+                    // document.getElementById("nameTitle").innerHTML = data['firstName'] + ' ' + data['lastName'];
+                    // document.getElementById("navbarName").innerHTML = data['firstName'] + ' ' + data['lastName'];
+                    // document.getElementById("emailMain").innerHTML = data['email'];
+                    // document.getElementById("emailTitle").innerHTML = data['email'];
+                    // document.getElementById("phoneMain").innerHTML = data['phone'];
+                    // document.getElementById("addressMain").innerHTML = data['address'];
+
+
+                },
+                error: function(xhr, status, error) {
+                    
+                    console.log(error);
+                },
+                finally: function() {
+
+                }
+            });
+        });
+    });
+</script>
