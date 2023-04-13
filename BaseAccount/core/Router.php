@@ -28,8 +28,7 @@ class Router
     }
 
     public function resolve()
-    {   
-        
+    {           
         $path = $this->request->getPath();
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
@@ -43,7 +42,7 @@ class Router
             return $this->renderView($callback);
         }
 
-        if (is_array($callback)) {             
+        if (is_array($callback)) {                         
             /** @var \app\core\Controller $controller */
             $controller = new $callback[0](); // controller name            
             Application::$app->controller = $controller;

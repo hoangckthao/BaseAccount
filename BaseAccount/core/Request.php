@@ -17,7 +17,7 @@ class Request
     }
 
     
-    public function method() {
+    public function method() {        
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
@@ -37,8 +37,10 @@ class Request
             }
         }
 
-        if ($this->method() === 'post') {
-            foreach ($_POST as $key => $value) {
+        if ($this->method() === 'post') {  
+            //echo "<pre>"; print_r($_POST); 
+            foreach ($_POST as $key => $value) {                
+                
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }

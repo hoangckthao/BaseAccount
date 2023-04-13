@@ -30,9 +30,16 @@ class AuthController extends Controller
                 $emailLogin = $loginForm->{'email'};
                 $userP = User::findOne(['email' => $emailLogin]);
 
+
+                // chi hien thi trang profile chu ko link toi trang profile
                 $this->setLayout('auth');
                 return $this->render('profile', ['userP' => $userP]);
+                
             }
+            $this->setLayout('auth');
+            return $this->render('login', [
+                'model' => $loginForm,
+            ]);
         }
         $this->setLayout('auth');
         return $this->render('login', [
@@ -129,5 +136,27 @@ class AuthController extends Controller
         }
         $this->setLayout('auth');
         return $this->render('forgotPassword', ['model' => $user]);
+    }
+
+    public function editProfileAjax(Request $request, Respone $respone)
+    {
+        $userP = new User();
+        $user = new User();        
+        $user->loadData($request->getBody());
+        
+        $userP = User::findOne(['email' => $user->getEmail()]);
+        if ($request->isPost()) {
+            if ($user->validatePhone()) {                
+                if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
+                    $json = json_encode($user);
+                    
+                    echo $json;
+                    return;
+                }                           
+                else echo "Update failed";
+            }
+        }
+        $this->setLayout('auth');
+        return $this->render('profile', ['userP' => $userP]);
     }
 }

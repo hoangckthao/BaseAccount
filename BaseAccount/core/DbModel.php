@@ -30,12 +30,11 @@ abstract class DbModel extends Model
         $tableName = $this->tableName();
         $attributes2 = [];
         foreach ($user as $key => $item) {
-            if ($key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" )$attributes[] = $key;
+            if ($key !== "image" && $key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" )$attributes[] = $key;
         }  
         foreach ($user as $key => $item) {
-            if ($key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" )$attributes2[$key] = $item;
+            if ($key !== "image" && $key !== "errors" && $key !== "id" && $key !== "password" && $key !== "passwordConfirm" && $key !== "email" )$attributes2[$key] = $item;
         }   
-        
         $attributeEmail = array_keys($where);
         $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributeEmail));
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);        
@@ -47,7 +46,8 @@ abstract class DbModel extends Model
         foreach ($where as $key => $item) {      
             $statement->bindValue(":$key", $item);
         }              
-        $statement->execute();
+        return $statement->execute();
+        
     }
 
     public function upgradePasswordByEmail($password, $user) {

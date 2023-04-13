@@ -14,9 +14,10 @@ abstract class Model
     public const RULE_UNIQUE = 'unique';
 
     public function loadData($data) {
-        
+                 
         foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
+            
+            if (property_exists($this, $key)) {                                             
                 if ($key === 'email') {
                     $user1 = User::findOneIdByEmail(['email' => $value]);
                     if ($user1) {
@@ -140,4 +141,3 @@ abstract class Model
         return $this->errors[$attribute][0] ?? false;
     }
 }
-?>

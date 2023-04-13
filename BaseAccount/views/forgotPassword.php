@@ -1,5 +1,5 @@
 <div class="container-fluid" style="display: flex;">
-    <div name="loginPage" style="display: block; width: 70%; padding: 30px;">
+    <div name="loginPage" style="display: block; width: 40%; padding: 30px;">
         <div class="auth-logo" style="text-align: center; padding-bottom: 0px;padding-top: 20px;">
             <a href="https://base.vn/">
                 <img src="https://share-gcdn.basecdn.net/brand/logo.full.png">
