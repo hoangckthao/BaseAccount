@@ -167,19 +167,20 @@ class AuthController extends Controller
     public function uploadImageAjax(Request $request, Respone $respone)
     {
         //https://stackoverflow.com/questions/17327602/can-i-pass-image-form-data-to-a-php-function-for-upload
+             
         if (isset($_FILES['imageFile'])) {
             $error = false;
             $image = $_FILES['imageFile'];
             $code = (int)$image["error"];
             $valid = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
             $folder = 'C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\views\images';
-            $target = $folder . $image['image'];
+            $target = $folder . $image['name'];
             //require_once(__DIR__ . '\vendor\autoload.php');
-
+            
             if (!file_exists($folder)) { //neu folder ko ton tai
                 @mkdir($folder, 0755, true);
             }
-
+            
             if ($code !== UPLOAD_ERR_OK) {
                 switch ($code) {
                     case UPLOAD_ERR_INI_SIZE:
