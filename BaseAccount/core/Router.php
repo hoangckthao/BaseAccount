@@ -32,6 +32,7 @@ class Router
         $path = $this->request->getPath();
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
+        
         if ($callback === false) {
             $this->response->setStatusCode('404');
             return $this->renderView('_404');
@@ -47,7 +48,9 @@ class Router
             $controller = new $callback[0](); // controller name            
             Application::$app->controller = $controller;
             $controller->action = $callback[1]; // action = profile, login, register ...
+            
             $callback[0] = $controller;
+            
             foreach ($controller->getMiddleware() as $middleware) {
                 // $middleware = 'profile'                
                 $middleware->execute();

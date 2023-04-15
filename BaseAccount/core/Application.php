@@ -80,9 +80,10 @@ class Application
     }
 
     public function login(DbModel $user)
-    {
+    {        
         $this->user = $user;
         $primaryKey = $user->primaryKey();
+        
         $primaryValue = $user->{$primaryKey}; //user id       
         $this->session->set('user', $primaryValue);
         return true;

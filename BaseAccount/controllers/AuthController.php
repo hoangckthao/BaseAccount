@@ -19,31 +19,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->registerMiddleware(new AuthMiddleware(['profile', 'editProfile']));
-    }
-    public function login(Request $request, Respone $respone)
-    {
-        $loginForm = new LoginForm();
-        if ($request->isPost()) {
-            $loginForm->loadData($request->getBody());
-            if ($loginForm->validate() && $loginForm->login()) {
-                $emailLogin = $loginForm->{'email'};
-                $userP = User::findOne(['email' => $emailLogin]);
-
-
-                // chi hien thi trang profile chu ko link toi trang profile
-                $this->setLayout('auth');
-                return $this->render('profile', ['userP' => $userP]);
-            }
-            $this->setLayout('auth');
-            return $this->render('login', [
-                'model' => $loginForm,
-            ]);
-        }
-        $this->setLayout('auth');
-        return $this->render('login', [
-            'model' => $loginForm,
-        ]);
+        $this->registerMiddleware(new AuthMiddleware(['profileWithAjax', 'editProfileWithAjax']));
     }
 
     public function loginWithAjax(Request $request, Respone $respone)
@@ -55,19 +31,15 @@ class AuthController extends Controller
                 if ($loginForm->login()) {
                     $emailLogin = $loginForm->{'email'};
                     $userP = User::findOne(['email' => $emailLogin]);
-                    $json = json_encode($userP);                   
+                    $json = json_encode($userP);
                     return $json;
-                } 
-                else {
+                } else {
                     $json = json_encode($loginForm);
-                    return $json; 
-                }    
-                
-            }
-            else {
+                    return $json;
+                }
+            } else {
                 $json = json_encode($loginForm);
                 return $json;
-
             }
         }
         $this->setLayout('auth');
@@ -76,30 +48,41 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function profileWithAjax(Request $request, Respone $respone)
+    {
+        $this->setLayout('auth');
+        $id = Application::$app->session->get('user');
+        $userP = User::findOne(['id' => $id]);
+        return $this->render('profile', [
+            'userP' => $userP,
+        ]);
+    }
+
+
+    public function registerWithAjax(Request $request, Respone $respone)
     {
         $user = new User();
         if ($request->isPost()) {
-
             $user->loadData($request->getBody());
             if ($user->validate()) {
                 if ($user->save()) {
-                    header("Location: login");
-                    return;
+                    $json = json_encode($user);
+                    return $json;
                 } else {
-                    $this->setLayout('auth');
-                    return $this->render('register', [
-                        'model' => $user,
-                    ]);
+                    $json = json_encode($user);
+                    return $json;
                 }
             } else {
-                //Application::$app->session->setFlash('success', 'Validate failed!');                                                       
-                return $this->render('register', ['model' => $user]);
+                $json = json_encode($user);
+                return $json;
             }
         }
         $this->setLayout('auth');
-        return $this->render('register', ['model' => $user]);
+        return $this->render('register', [
+            'model' => $user,
+        ]);
     }
+
     public function logout(Request $request, Respone $respone)
     {
         Application::$app->logout();
@@ -117,51 +100,44 @@ class AuthController extends Controller
         ]);
     }
 
-    public function editProfile(Request $request, Respone $respone)
-    {
-        $user = new User();
-        if ($request->isPost()) {
-
-            $user->loadData($request->getBody());
-            $user2 = User::findOne(['id' => $user->getId()]);
-            if ($user->validatePhone() && $user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
-                $user2 = User::findOne(['id' => $user->getId()]);
-                //Application::$app->session->setFlash('success', 'Edit successfully!');
-                //Application::$app->respone->redirect('/profile');
-                //var_dump($user).PHP_EOL;
-                return $this->render('profile', ['userP' => $user2]);
-            }
-            return $this->render('profile', ['userP' => $user2]);
-        }
-        $this->setLayout('auth');
-        return $this->render('profile', ['userP' => $user]);
-    }
-
-    public function forgotPassword(Request $request, Respone $respone)
+    public function forgotPasswordWithAjax(Request $request, Respone $respone)
     {
         $forgotPasswordForm = new ForgotPasswordForm();
         $user = new User();
         if ($request->isPost()) {
+
             $forgotPasswordForm->loadData($request->getBody());
-            //var_dump($forgotPasswordForm);
-            if ($forgotPasswordForm->validate() && $forgotPasswordForm->checkEmailExits()) {
+            if ($forgotPasswordForm->validate()) {
+                if ($forgotPasswordForm->checkEmailExits()) {
+                    $emailRecover = $forgotPasswordForm->{'email'};
+                    if (($passwordChanged = $forgotPasswordForm->sendMailChangePassword()) !== null) {
+                        $user = User::findOne(['email' => $emailRecover]);
+                        $passwordChanged = password_hash($passwordChanged, PASSWORD_DEFAULT);
+                        if ($user->upgradePasswordByEmail(['password' => $passwordChanged], $user)) {
 
-                $emailRecover = $forgotPasswordForm->{'email'};
-                if (($passwordChanged = $forgotPasswordForm->sendMailChangePassword()) !== null) {
-                    $user = User::findOne(['email' => $emailRecover]);
-                    $passwordChanged = password_hash($passwordChanged, PASSWORD_DEFAULT);
-                    if ($user->upgradePasswordByEmail(['password' => $passwordChanged], $user)) {
+                            $json = json_encode($user);
+                            return $json;
+                        } else {
+                            //update pass failed
+                            $json = json_encode($forgotPasswordForm);
+                            return $json;
+                        }
+                    } else {
+                        //send email failed
 
-                        $this->setLayout('auth');
-                        return $this->render('forgotPassword', ['model' => $forgotPasswordForm]);
+                        $json = json_encode($forgotPasswordForm);
+                        return $json;
                     }
                 } else {
-                    throw new UpgradePasswordException();
+                    //email is not exits
+                    $json = json_encode($forgotPasswordForm);
+                    return $json;
                 }
+            } else {
+                // email is validate failed  
+                $json = json_encode($forgotPasswordForm);
+                return $json;
             }
-            //var_dump($forgotPasswordForm);
-            $this->setLayout('auth');
-            return $this->render('forgotPassword', ['model' => $forgotPasswordForm]);
         }
         $this->setLayout('auth');
         return $this->render('forgotPassword', ['model' => $user]);
@@ -186,5 +162,80 @@ class AuthController extends Controller
         }
         $this->setLayout('auth');
         return $this->render('profile', ['userP' => $userP]);
+    }
+
+    public function uploadImageAjax(Request $request, Respone $respone)
+    {
+        //https://stackoverflow.com/questions/17327602/can-i-pass-image-form-data-to-a-php-function-for-upload
+        if (isset($_FILES['imageFile'])) {
+            $error = false;
+            $image = $_FILES['imageFile'];
+            $code = (int)$image["error"];
+            $valid = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
+            $folder = 'C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\views\images';
+            $target = $folder . $image['image'];
+            //require_once(__DIR__ . '\vendor\autoload.php');
+
+            if (!file_exists($folder)) { //neu folder ko ton tai
+                @mkdir($folder, 0755, true);
+            }
+
+            if ($code !== UPLOAD_ERR_OK) {
+                switch ($code) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $error  = 'Error ' . $code . ': The uploaded file exceeds the <a href="http://www.php.net/manual/en/ini.core.php#ini.upload-max-filesize" target="_blank" rel="nofollow"><span class="function-string">upload_max_filesize</span></a> directive in php.ini';
+                        break;
+                    case UPLOAD_ERR_FORM_SIZE:
+                        $error  = 'Error ' . $code . ': The uploaded file exceeds the <span class="const-string">MAX_FILE_SIZE</span> directive that was specified in the HTML form';
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $error  = 'Error ' . $code . ': The uploaded file was only partially uploaded';
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        $error  = 'Error ' . $code . ': No file was uploaded';
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        $error  = 'Error ' . $code . ': Missing a temporary folder';
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        $error  = 'Error ' . $code . ': Failed to write file to disk';
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        $error  = 'Error ' . $code . ': A PHP extension stopped the file upload';
+                        break;
+                    default:
+                        $error  = 'Error ' . $code . ': Unknown upload error';
+                        break;
+                }
+            } else {
+                $iminfo = @getimagesize($image["tmp_name"]);
+                if ($iminfo && is_array($iminfo)) {
+                    if (isset($iminfo[2]) && in_array($iminfo[2], $valid) && is_readable($image["tmp_name"])) {
+                        if (!move_uploaded_file($image["tmp_name"], $target)) {
+                            $error  = "Error while moving uploaded file";
+                        }
+                    } else {
+                        $error  = "Invalid format or image is not readable";
+                    }
+                } else {
+                    $error  = "Only image files are allowed (jpg, gif, png)";
+                }
+            }
+            if (empty($error)) {
+                echo json_encode(array("error" => 0, "message" => "Upload success!"));
+            } else {
+                echo json_encode(array("error" => 1, "message" => $error));
+            }
+            exit();
+        }
+
+        // $id = Application::$app->session->get('user');
+        // $userP = User::findOne(['id' => $id]);
+        // print_r($userP);
+        // die();
+        // if ($request->isPost()) {
+        // }
+        // $this->setLayout('auth');
+        // return $this->render('profile', ['userP' => $userP]);
     }
 }

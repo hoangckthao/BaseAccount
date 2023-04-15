@@ -6,7 +6,7 @@ use app\core\Application;
 <div class="container-fluid" style="padding: 0; display: flex; flex-direction:row">
 
     <!-- sticky label in the left -->
-    <div class="container" style="width: 90px; background-color: #211c23;  top: 0px; left: 0px; height: 100%; transition-property:all; position: sticky; float:left">
+    <div class="container" style="width: 128px; background-color: #211c23;  top: 0px; left: 0px; height: 100vh; transition-property:all; position: sticky; float:left">
         <div class="item" style="position: relative;">
             <div style="height: 51px;text-align: center; cursor:pointer">
                 <div class="innerImage" style="width: 32px; height: 32px; margin: auto; overflow: hidden; margin-top: 10px;">
@@ -30,23 +30,23 @@ use app\core\Application;
         <div class="item" style="position: relative; padding:5px">
             <div style="height: 41px;text-align: center; cursor:pointer">
                 <div class="icon" style="width: 36px; height: 36px; margin: auto; overflow: hidden; margin-top: 10px;">
-                    <i class='far fa-bell' style='font-size:24px; color:#fff'></i>
+                    <i class='far fa-bell' style='font-size:24px; color:#888'></i>
                 </div>
             </div>
-            <div class="info" style="font-weight: normal; display: block; color: #fff; text-transform: none;
+            <div class="info" style="font-weight: normal; display: block; color: #888; text-transform: none;
                 font-size: 13px; position: relative; top: auto; left: auto; background-color: transparent; 
                 padding-top: 0px; padding-bottom: 15px; margin-top: -2px; text-align: center;">
                 Thông báo
             </div>
         </div>
 
-        <div class="item" style="position: relative; padding:5px">
+        <div class="item" style="position: relative; padding:5px; ">
             <div style="height: 41px;text-align: center; cursor:pointer">
                 <div class="icon" style="width: 36px; height: 36px; margin: auto; overflow: hidden; margin-top: 10px;">
-                    <i class='fas fa-user-friends' style='font-size:24px; color:#fff'></i>
+                    <i class='fas fa-user-friends' style='font-size:24px;color:#888 '></i>
                 </div>
             </div>
-            <div class="info" style="font-weight: bolnormald; display: block; color: #fff; text-transform: none;
+            <div class="info" style="font-weight: bolnormald; display: block; color: #888; text-transform: none;
                 font-size: 13px; position: relative; top: auto; left: auto; background-color: transparent; 
                 padding-top: 0px; padding-bottom: 15px; margin-top: -2px; text-align: center;">
                 Thành viên
@@ -56,10 +56,10 @@ use app\core\Application;
         <div class="item" style="position: relative; padding:5px">
             <div style="height: 41px;text-align: center; cursor:pointer">
                 <div class="icon" style="width: 36px; height: 36px; margin: auto; overflow: hidden; margin-top: 10px;">
-                    <i class='fas fa-balance-scale' style='font-size:24px; color: #fff;'></i>
+                    <i class='fas fa-balance-scale' style='font-size:24px; color: #888;'></i>
                 </div>
             </div>
-            <div class="info" style="font-weight: normal; display: block; color: #fff; text-transform: none;
+            <div class="info" style="font-weight: normal; display: block; color: #888; text-transform: none;
                 font-size: 13px; position: relative; top: auto; left: auto; background-color: transparent; 
                 padding-top: 0px; padding-bottom: 15px; margin-top: -2px; text-align: center;">
                 Nhóm
@@ -69,10 +69,10 @@ use app\core\Application;
         <div class="item" style="position: relative; padding:5px">
             <div style="height: 41px;text-align: center; cursor:pointer">
                 <div class="icon" style="width: 36px; height: 36px; margin: auto; overflow: hidden; margin-top: 10px;">
-                    <i class='far fa-flag' style='font-size:24px; color:#fff'></i>
+                    <i class='far fa-flag' style='font-size:24px; color:#888'></i>
                 </div>
             </div>
-            <div class="info" style="font-weight: normal; display: block; color: #fff; text-transform: none;
+            <div class="info" style="font-weight: normal; display: block; color: #888; text-transform: none;
                 font-size: 13px; position: relative; top: auto; left: auto; background-color: transparent; 
                 padding-top: 0px; padding-bottom: 15px; margin-top: -2px; text-align: center;">
                 TK Khách
@@ -81,27 +81,26 @@ use app\core\Application;
         <div class="item" style="position: relative; padding:5px">
             <div style="height: 41px;text-align: center; cursor:pointer">
                 <div class="icon" style="width: 36px; height: 36px; margin: auto; overflow: hidden; margin-top: 10px;">
-                    <i class='fas fa-globe' style='font-size:24px; color: #fff;'></i>
+                    <i class='fas fa-globe' style='font-size:24px; color: #888;'></i>
                 </div>
             </div>
-            <div class="info" style="font-weight: normal; display: block; color: #fff; text-transform: none;
+            <div class="info" style="font-weight: normal; display: block; color: #888; text-transform: none;
                 font-size: 13px; position: relative; top: auto; left: auto; background-color: transparent; 
                 padding-top: 0px; padding-bottom: 15px; margin-top: -2px; text-align: center;">
                 Ứng dụng
             </div>
         </div>
 
-        <div class="item" style="position: relative; bottom: 0px; left: 0px; ">
+        <div class="item" style="position: relative; bottom: 20px; left: 0px; ">
             <div style="height: 41px;text-align: center; cursor:pointer">
                 <div class="icon" style="width: 36px; height: 36px; margin: auto; overflow: hidden; margin-top: 10px;">
 
                 </div>
             </div>
-            <div class="info" style="font-weight: normal; display: block; color: #fff; text-transform: none;
+            <div class="info" style="font-weight: normal; display: block; color: #888; text-transform: none;
                 font-size: 13px; position: relative; top: auto; left: auto; background-color: transparent; 
                 padding-top: 0px; padding-bottom: 15px; margin-top: -2px; text-align: center;">
-                <a class="nav-link" aria-current="page" href="/logout" id="logoutName">
-
+                <a class="nav-link" aria-current="page" href="/logout" id="logoutName" style="margin-top: 35px;">
                     Đăng xuất
                 </a>
             </div>
@@ -112,7 +111,7 @@ use app\core\Application;
 
     <div class="container">
         <!-- navbar navigation -->
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: lightgray;" id="navbarTutorial">
+        <nav class="navbar navbar-expand-lg" style="background-color: white; border-bottom: 2px solid #eee;" id="navbarTutorial">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/login"><-- </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,7 +124,7 @@ use app\core\Application;
                                 if (!Application::isGuest()) {
                                 ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" aria-current="page" style="text-transform: uppercase;color: #ccc; font-size: 11px; font-weight: normal; padding-bottom: 3px;">Tài khoản</a>
+                                        <a class="nav-link" aria-current="page" style="text-transform: uppercase;color: #ccc; font-size: 11px; font-weight: normal; padding-bottom: 3px; margin-bottom: -11px;">Tài khoản</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" aria-current="page" id="navbarName" style="font-size: 18px; font-weight: 300; color: #222;">
@@ -151,8 +150,11 @@ use app\core\Application;
 
                             ?>
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-top: 25px; padding-right: 10px; ; position: absolute; top: 0; right: 0;">
-                                    <li class="nav-item">
-                                        <button style="border-radius: 4px; padding: 9px 15px; background-color: #16bccf;" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" id="open-popup-btn">+ Chỉnh sửa tài khoản</button>
+                                    <li class="nav-item" style="margin-top: -5px;">
+                                        <button style="border-radius: 4px; padding: 6px 15px; border: hidden;  background-color: #16bccf;" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" id="open-popup-btn">
+                                            <i class='fas fa-arrow-up' style='font-size:12px;padding-right: 12px;padding-bottom: 6px;'></i>
+                                            Chỉnh sửa tài khoản
+                                        </button>
                                     </li>
 
                                 </ul>
@@ -169,11 +171,16 @@ use app\core\Application;
 
                 <!-- avatar -->
                 <div class="container" style="width: 20%;">
-                    <img style="object-fit: cover; width: 100%; height: auto;" src="<?php echo $userP->getImage() ?? 'https://share-gcdn.basecdn.net/brand/logo.full.png' ?>" alt="Loading Picture">
+
+                    <!-- <img style="object-fit: cover; width: 100%; height: auto;" src="https://share-gcdn.basecdn.net/brand/logo.full.png" alt="Loading Picture"> -->
+                    <img id="uploadImageFinished" width="100px" height="100px" style="border:#000; z-index:1;position: relative; border-width:2px; float:left" height="100px" src="\fakepath\img_413163228-compress0.pdf">
+                    <form id="imageUploadForm" enctype="multipart/form-data">
+                        <input type="file" accept=".jpg, .png" id="image" name="image" style="font-size: 10px;" />
+                    </form>
                 </div>
                 <!-- content -->
                 <div class="container" style="display: flex; flex-direction:column">
-                    <div style="font-size: 28px;font-weight: 700;" id="fullNameMain">
+                    <div style="font-size: 28px;" id="fullNameMain">
                         <?php echo $userP->getDisplayName() ?>
                     </div>
                     <div style="font-size: 16px;font-weight: 200;">Owner</div>
@@ -305,14 +312,16 @@ use app\core\Application;
     </div>
 
     <!-- sticky label in the right -->
-    <div class="container" style="position: relative; width: 270px; bottom: 0px; right: 0px; top: 0px; color: #999; border-left: 1px solid rgba(0,0,0,0.1); background-color: #f6f6f6;">
+    <div class="container" style="position: relative; width: 288px; bottom: 0px; right: 0px; top: 0px; color: #999; border-left: 1px solid rgba(0,0,0,0.1); background-color: #f6f6f6;">
         <div class="list items" style="padding: 0; margin: 0; display:block;">
-            <div class="top" style="padding: 13px 15px;border-bottom: 1px solid #eee; height: 74px; box-sizing: border-box;">
+            <div class="top" style="padding: 12px 0px;border-bottom: 2px solid #eee; height: 74px; box-sizing: border-box;">
                 <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-wrap: normal;">
                     <div id="nameTitle" style="font-size: 22px; font-weight: 300; color: #111;"><?php echo $userP->getDisplayName() ?></div>
                     <div id="emailTitle" style="font-weight: normal; font-size: 14px; padding-top: 4px;">@<?php echo $userP->getEmail() ?></div>
                 </div>
-                <div class="title" style="font-weight: 300;font-size: 14px; text-transform: uppercase; color: #999;padding: 20px 15px 15px 20px; border-top: 1px solid #eee;">
+
+                <!--list function -->
+                <div class="title" style="font-weight: 300;font-size: 14px; text-transform: uppercase; color: #999;padding: 20px 15px 15px 20px; margin-left: -9px;">
                     Thông tin tài khoản
                 </div>
                 <div class="position:relative; display:flex">
@@ -351,16 +360,16 @@ use app\core\Application;
                         <div class="text" style=" margin-left: 15px;">Lịch làm việc</div>
                     </div>
                 </div>
-                <div class="position:relative; display:flex;" style="padding-top: 7px">
+                <div class="position:relative; display:flex;" style="padding-top: 7px; padding-bottom: 23px;">
                     <div class="li active url" style="display: flex;">
                         <div class="icon" style="width: fit-content;"><i class='fas fa-plus-circle' style='font-size:12px'></i></div>
                         <div class="text" style=" margin-left: 15px;">Bảo mật 2 lớp</div>
                     </div>
                 </div>
-                <div class="title" style="font-weight: 300;font-size: 14px; text-transform: uppercase; color: #999;padding: 20px 15px 15px 20px; border-top: 1px solid #eee;">
+                <div class="title" style="font-weight: 300;font-size: 14px; text-transform: uppercase; color: #999;padding: 20px 15px 15px 20px; border-top: 1px solid #eee;     margin-left: -9px;margin-bottom: 20px;">
                     Ứng dụng - bảo mật
                 </div>
-                <div class="title" style="font-weight: 300;font-size: 14px; text-transform: uppercase; color: #999;padding: 20px 15px 15px 20px; border-top: 1px solid #eee;">
+                <div class="title" style="font-weight: 300;font-size: 14px; text-transform: uppercase; color: #999;padding: 20px 15px 15px 20px; border-top: 1px solid #eee;     margin-left: -9px;">
                     Tủy chỉnh nâng cao
                 </div>
                 <div class="position:relative; display:flex;" style="padding-top: 7px">
@@ -395,8 +404,6 @@ use app\core\Application;
                 </div>
             </div>
 
-            <!-- list function -->
-
 
         </div>
 
@@ -410,7 +417,7 @@ use app\core\Application;
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">CHỈNH SỬA THÔNG TIN CÁ NHÂN</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="updateForm">
+                <form id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <table class="table ">
                             <tbody>
@@ -443,7 +450,7 @@ use app\core\Application;
 
                                     <td>
                                         <div class="mb-3">
-                                            <input class="form-control image" type="file" id="formFile" name="image" value="<?php echo $userP->getImage() ?>" readonly>
+                                            <input class="form-control image" type="file" id="image" name="image">
                                         </div>
                                     </td>
                                 </tr>
@@ -476,8 +483,84 @@ use app\core\Application;
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $('.buttonAjax').click(function(e) {                
+        $(document).ready(function(e) {
+            //upload image  
+
+            $("#image").on("change", function(e) {
+                // $("#imageUploadForm").submit();
+                const {
+                    files
+                } = event.target;
+                var formData = new FormData;
+                e.preventDefault(); 
+                formData.append('imageFile', files[0]);
+                $.ajax({
+                    url: 'uploadImage',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success:function(data) {
+                        console.log("success");
+                        console.log(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    },
+                    finally: function() {
+
+                    }
+                });
+                // var file = files[0];
+                // var ajax = new XMLHttpRequest;
+                // var formData = new FormData;
+                // formData.append('imageFile', file);
+
+                // ajax.upload.addEventListener("progress", myProgressHandler, false);
+                // ajax.addEventListener('load', myOnLoadHandler, false);
+                // ajax.open('POST', '/uploadImage', true);
+                // ajax.send(formData);
+                
+            });
+
+            function myProgressHandler(event) {
+                //your code to track upload progress
+                var p = Math.floor(event.loaded / event.total * 100);
+                document.title = p + '%';
+            }
+
+            function myOnLoadHandler(event) {
+                // your code on finished upload
+                alert(event.target.responseText);
+            }
+            // $('#imageUploadForm').on('submit', function(e) {
+            //     e.preventDefault();
+            //     var formData = new FormData(this);
+            //     console.log(formData);
+            //     $ajax({
+            //         url: 'uploadImage',
+            //         type: 'POST',
+            //         data: formData,
+            //         cache: false,
+            //         contentType: false,
+            //         processData: false,
+            //         success:function(data) {
+            //             console.log("success");
+            //             console.log(data);
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.log(error);
+            //         },
+            //         finally: function() {
+
+            //         }
+            //     });
+            // });
+
+            /////////////////////////////////////////////////////////////////////////////////
+            // Edit profile
+            $('.buttonAjax').click(function(e) {
                 e.preventDefault();
                 $.ajax({
                     url: 'editProfile',
@@ -493,7 +576,7 @@ use app\core\Application;
                     dataType: 'json',
                     success: function(data) {
                         $('#staticBackdrop').hide();
-                        $('.modal-backdrop').hide();                        
+                        $('.modal-backdrop').hide();
 
                         document.getElementById("fullNameMain").innerHTML = data['firstName'] + ' ' + data['lastName'];
                         document.getElementById("nameTitle").innerHTML = data['firstName'] + ' ' + data['lastName'];
