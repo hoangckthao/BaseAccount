@@ -50,6 +50,32 @@ abstract class DbModel extends Model
         
     }
 
+    public function upgradeImageById($where, $user) {
+        $tableName = $this->tableName();
+        $attributes2 = [];
+        foreach ($user as $key => $item) {
+            if ($key === 'image') $attributes[] = $key;
+        }  
+        foreach ($user as $key => $item) {
+            if ($key === "image")$attributes2[$key] = $item;
+        }   
+        $attributeId = array_keys($where);
+        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributeId)); // id= :id
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);        // SET image = :image
+        $statement = self::prepare("UPDATE $tableName SET ".implode(',',$params)."  WHERE $sql");                      
+        foreach ($attributes2 as $key => $item) { 
+            if ($key === "image" ) {
+                $item = str_replace('\\', '\\\\', $item);
+                $statement->bindValue(":$key", $item);                       
+            }
+        }                 
+        foreach ($where as $key => $item) {      
+            $statement->bindValue(":$key", $item);
+        }                
+        return $statement->execute();
+        
+    }
+
     public function upgradePasswordByEmail($password, $user) {
         $tableName = $this->tableName();
         $attribute = [

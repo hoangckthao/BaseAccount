@@ -148,18 +148,48 @@ class AuthController extends Controller
         $userP = new User();
         $user = new User();
         $user->loadData($request->getBody());
-
         $userP = User::findOne(['email' => $user->getEmail()]);
         if ($request->isPost()) {
             if ($user->validatePhone()) {
-                if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
-                    $json = json_encode($user);
 
-                    echo $json;
-                    return;
-                } else echo "Update failed";
+                $errorCheck = array();
+                $errorCheck = $this->uploadImageAjax($request, $respone);
+                foreach ($errorCheck as $key => $val) {
+                    if ($key === 1) {
+                        //upgrade anh thanh cong
+                        if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
+                            //upgrade toan bo thanh cong 
+                            $user = User::findOne(['email' => $user->getEmail()]);
+                            $json = json_encode($user);
+                            echo $json;
+                            return;
+                        } else {
+                            // upgrade tat ca failed
+                            $user = User::findOne(['email' => $user->getEmail()]);
+                            $user->errors = ['all' => 'Update errors, please try again'];
+                            $json = json_encode($user);
+                            echo $json;
+                            return;
+                        }
+                    } else {
+                        //upgrade anh failed
+                        $user = User::findOne(['email' => $user->getEmail()]);
+                        $user->errors = ['image' => $val];
+                        $json = json_encode($user);
+
+                        echo $json;
+                        return;
+                    }
+                }
+            } else {
+                $user = User::findOne(['email' => $user->getEmail()]);
+                $json = json_encode($user);
+                $user->errors = ['phone' => 'Please input the right phone with min of length is 8 numbers'];
+                echo $json;
+                return;
             }
         }
+
         $this->setLayout('auth');
         return $this->render('profile', ['userP' => $userP]);
     }
@@ -167,20 +197,20 @@ class AuthController extends Controller
     public function uploadImageAjax(Request $request, Respone $respone)
     {
         //https://stackoverflow.com/questions/17327602/can-i-pass-image-form-data-to-a-php-function-for-upload
-             
+
         if (isset($_FILES['imageFile'])) {
             $error = false;
             $image = $_FILES['imageFile'];
             $code = (int)$image["error"];
             $valid = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
-            $folder = 'C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\views\images';
+            $folder = 'C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\public\images\\';
             $target = $folder . $image['name'];
             //require_once(__DIR__ . '\vendor\autoload.php');
-            
+
             if (!file_exists($folder)) { //neu folder ko ton tai
                 @mkdir($folder, 0755, true);
             }
-            
+
             if ($code !== UPLOAD_ERR_OK) {
                 switch ($code) {
                     case UPLOAD_ERR_INI_SIZE:
@@ -210,6 +240,7 @@ class AuthController extends Controller
                 }
             } else {
                 $iminfo = @getimagesize($image["tmp_name"]);
+
                 if ($iminfo && is_array($iminfo)) {
                     if (isset($iminfo[2]) && in_array($iminfo[2], $valid) && is_readable($image["tmp_name"])) {
                         if (!move_uploaded_file($image["tmp_name"], $target)) {
@@ -223,20 +254,20 @@ class AuthController extends Controller
                 }
             }
             if (empty($error)) {
-                echo json_encode(array("error" => 0, "message" => "Upload success!"));
-            } else {
-                echo json_encode(array("error" => 1, "message" => $error));
-            }
-            exit();
-        }
+                // update into database
+                $id = Application::$app->session->get('user');
+                $url = '../images/' . $image['name'];
+                $user = new User;
+                $user = User::findOneById(['id' => $id]);
+                $user = $user->setImage($url);
 
-        // $id = Application::$app->session->get('user');
-        // $userP = User::findOne(['id' => $id]);
-        // print_r($userP);
-        // die();
-        // if ($request->isPost()) {
-        // }
-        // $this->setLayout('auth');
-        // return $this->render('profile', ['userP' => $userP]);
+                if ($user->upgradeImageById(['id' => $id], $user)) {
+                    // upgrade anh success
+                    return [1 => json_encode($user)];
+                }
+            } else {
+                return [0 => $error];
+            }
+        }
     }
 }

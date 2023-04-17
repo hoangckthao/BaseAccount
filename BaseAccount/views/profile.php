@@ -173,10 +173,16 @@ use app\core\Application;
                 <div class="container" style="width: 20%;">
 
                     <!-- <img style="object-fit: cover; width: 100%; height: auto;" src="https://share-gcdn.basecdn.net/brand/logo.full.png" alt="Loading Picture"> -->
-                    <img id="uploadImageFinished" width="100px" height="100px" style="border:#000; z-index:1;position: relative; border-width:2px; float:left" height="100px" src="\fakepath\img_413163228-compress0.pdf">
+                    <label for="imageMain">
+                        <img id="uploadImageFinished" width="120px" height="120px" style="border:#000; z-index:1;position: relative; 
+                        border-width:2px; float:left; border-radius: 50%" src=" <?php echo $userP->getImage() ?>"> <!-- ../images/OIP.jpg -->
+                    </label>
                     <form id="imageUploadForm" enctype="multipart/form-data">
-                        <input type="file" accept=".jpg, .png" id="image" name="image" style="font-size: 10px;" />
+                        <input type="file" accept=".jpg, .png" id="imageMain" name="image" style="display: none; font-size: 10px;" />
                     </form>
+
+
+
                 </div>
                 <!-- content -->
                 <div class="container" style="display: flex; flex-direction:column">
@@ -427,6 +433,7 @@ use app\core\Application;
                                     <td>
                                         <input class="form-control firstName" type="text" name="firstName" value="<?php echo $userP->getFirstName() ?>" style="font-size: 16px; margin-bottom: 10px;" required>
                                     </td>
+
                                 </tr>
 
                                 <tr>
@@ -450,7 +457,8 @@ use app\core\Application;
 
                                     <td>
                                         <div class="mb-3">
-                                            <input class="form-control image" type="file" id="image" name="image">
+                                            <input accept=".jpg, .png" class="form-control image" type="file" id="imageChange" name="image">
+                                            <span id="image-warning" style="color:red"></span>
                                         </div>
                                     </td>
                                 </tr>
@@ -486,13 +494,13 @@ use app\core\Application;
         $(document).ready(function(e) {
             //upload image  
 
-            $("#image").on("change", function(e) {
+            $("#imageMain").on("change", function(e) {
                 // $("#imageUploadForm").submit();
                 const {
                     files
                 } = event.target;
                 var formData = new FormData;
-                e.preventDefault(); 
+                e.preventDefault();
                 formData.append('imageFile', files[0]);
                 $.ajax({
                     url: 'uploadImage',
@@ -501,9 +509,13 @@ use app\core\Application;
                     cache: false,
                     contentType: false,
                     processData: false,
-                    success:function(data) {
+                    success: function(data) {
                         console.log("success");
-                        console.log(data);
+                        var dataReturn = JSON.parse(data);
+                        console.log(dataReturn['image']);
+
+                        document.getElementById('uploadImageFinished').setAttribute("src", dataReturn['image']);
+                        '">'
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
@@ -512,16 +524,7 @@ use app\core\Application;
 
                     }
                 });
-                // var file = files[0];
-                // var ajax = new XMLHttpRequest;
-                // var formData = new FormData;
-                // formData.append('imageFile', file);
 
-                // ajax.upload.addEventListener("progress", myProgressHandler, false);
-                // ajax.addEventListener('load', myOnLoadHandler, false);
-                // ajax.open('POST', '/uploadImage', true);
-                // ajax.send(formData);
-                
             });
 
             function myProgressHandler(event) {
@@ -534,57 +537,57 @@ use app\core\Application;
                 // your code on finished upload
                 alert(event.target.responseText);
             }
-            // $('#imageUploadForm').on('submit', function(e) {
-            //     e.preventDefault();
-            //     var formData = new FormData(this);
-            //     console.log(formData);
-            //     $ajax({
-            //         url: 'uploadImage',
-            //         type: 'POST',
-            //         data: formData,
-            //         cache: false,
-            //         contentType: false,
-            //         processData: false,
-            //         success:function(data) {
-            //             console.log("success");
-            //             console.log(data);
-            //         },
-            //         error: function(xhr, status, error) {
-            //             console.log(error);
-            //         },
-            //         finally: function() {
-
-            //         }
-            //     });
-            // });
 
             /////////////////////////////////////////////////////////////////////////////////
             // Edit profile
-            $('.buttonAjax').click(function(e) {
+
+            var imageFile;
+            $('#imageChange').on("change", function(e) {
+                const {
+                    files
+                } = event.target;
+
                 e.preventDefault();
+                imageFile = files[0];
+            });
+            $('.buttonAjax').on('click', function(e) {
+                e.preventDefault();
+                var updateFormData = new FormData();
+                updateFormData.append('imageFile', imageFile);
+                updateFormData.append('firstName', $('.firstName').val());
+                updateFormData.append('lastName', $('.lastName').val());
+                updateFormData.append('email', $('.email').val());
+                updateFormData.append('phone', $('.phone').val());
+                updateFormData.append('address', $('.address').val());
+
                 $.ajax({
                     url: 'editProfile',
                     type: 'POST',
-                    data: {
-                        firstName: $('.firstName').val(),
-                        lastName: $('.lastName').val(),
-                        email: $('.email').val(),
-                        phone: $('.phone').val(),
-                        address: $('.address').val(),
-                    },
-
-                    dataType: 'json',
+                    data: updateFormData,                   
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function(data) {
-                        $('#staticBackdrop').hide();
-                        $('.modal-backdrop').hide();
+                        console.log(data);
+                        var dataReturn = JSON.parse(data);
 
-                        document.getElementById("fullNameMain").innerHTML = data['firstName'] + ' ' + data['lastName'];
-                        document.getElementById("nameTitle").innerHTML = data['firstName'] + ' ' + data['lastName'];
-                        document.getElementById("navbarName").innerHTML = data['firstName'] + ' ' + data['lastName'];
-                        document.getElementById("emailMain").innerHTML = data['email'];
-                        document.getElementById("emailTitle").innerHTML = data['email'];
-                        document.getElementById("phoneMain").innerHTML = data['phone'];
-                        document.getElementById("addressMain").innerHTML = data['address'];
+                        // anh co loi
+                        if (dataReturn['errors']['image']) {
+                            document.getElementById('image-warning').innerHTML = dataReturn['errors']['image'];
+                        } else {
+                            document.getElementById('image-warning').innerHTML = '';
+                            document.getElementById('uploadImageFinished').setAttribute("src", dataReturn['image']);
+                            $('#staticBackdrop').hide();
+                            $('.modal-backdrop').hide();
+
+                            document.getElementById("fullNameMain").innerHTML = dataReturn['firstName'] + ' ' + dataReturn['lastName'];
+                            document.getElementById("nameTitle").innerHTML = dataReturn['firstName'] + ' ' + dataReturn['lastName'];
+                            document.getElementById("navbarName").innerHTML = dataReturn['firstName'] + ' ' + dataReturn['lastName'];
+                            document.getElementById("emailMain").innerHTML = dataReturn['email'];
+                            document.getElementById("emailTitle").innerHTML = dataReturn['email'];
+                            document.getElementById("phoneMain").innerHTML = dataReturn['phone'];
+                            document.getElementById("addressMain").innerHTML = dataReturn['address'];
+                        }
 
 
                     },
