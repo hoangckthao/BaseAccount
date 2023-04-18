@@ -510,9 +510,11 @@ use app\core\Application;
                     contentType: false,
                     processData: false,
                     success: function(data) {
+                        
                         console.log("success");
+                        //console.log(data);
+                        console.log(JSON.parse(data));
                         var dataReturn = JSON.parse(data);
-                        console.log(dataReturn['image']);
 
                         document.getElementById('uploadImageFinished').setAttribute("src", dataReturn['image']);
                         '">'
@@ -568,13 +570,14 @@ use app\core\Application;
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        console.log(data);
                         var dataReturn = JSON.parse(data);
+                        console.log(dataReturn);
 
                         // anh co loi
                         if (dataReturn['errors']['image']) {
                             document.getElementById('image-warning').innerHTML = dataReturn['errors']['image'];
                         } else {
+                            console.log(1);
                             document.getElementById('image-warning').innerHTML = '';
                             document.getElementById('uploadImageFinished').setAttribute("src", dataReturn['image']);
                             $('#staticBackdrop').hide();

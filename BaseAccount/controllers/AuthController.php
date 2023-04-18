@@ -148,40 +148,47 @@ class AuthController extends Controller
         $userP = new User();
         $user = new User();
         $user->loadData($request->getBody());
+
         $userP = User::findOne(['email' => $user->getEmail()]);
         if ($request->isPost()) {
             if ($user->validatePhone()) {
 
                 $errorCheck = array();
                 $errorCheck = $this->uploadImageAjax($request, $respone);
-                foreach ($errorCheck as $key => $val) {
-                    if ($key === 1) {
-                        //upgrade anh thanh cong
-                        if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
-                            //upgrade toan bo thanh cong 
-                            $user = User::findOne(['email' => $user->getEmail()]);
-                            $json = json_encode($user);
-                            echo $json;
-                            return;
-                        } else {
-                            // upgrade tat ca failed
-                            $user = User::findOne(['email' => $user->getEmail()]);
-                            $user->errors = ['all' => 'Update errors, please try again'];
-                            $json = json_encode($user);
-                            echo $json;
-                            return;
-                        }
-                    } else {
-                        //upgrade anh failed
-                        $user = User::findOne(['email' => $user->getEmail()]);
-                        $user->errors = ['image' => $val];
-                        $json = json_encode($user);
+                $errorCheck = json_decode($errorCheck);
 
+
+                if (!empty($errorCheck->errors)) {
+                    //co loi
+                    //upgrade anh failed
+                    $user = User::findOne(['email' => $user->getEmail()]);
+                    $user->errors = ['image' => $errorCheck->errors[0]];
+                    $json = json_encode($user);
+                    // var_dump($json);
+                    // die();
+                    echo $json;
+                    return;
+                } 
+                else {
+                    // khong co loi
+                    //upgrade anh thanh cong
+                    if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
+                        //upgrade toan bo thanh cong 
+                        $user = User::findOne(['email' => $user->getEmail()]);
+                        $json = json_encode($user);
+                        echo $json;
+                        return;
+                    } else {
+                        // upgrade tat ca failed
+                        $user = User::findOne(['email' => $user->getEmail()]);
+                        $user->errors = ['all' => 'Update errors, please try again'];
+                        $json = json_encode($user);
                         echo $json;
                         return;
                     }
                 }
             } else {
+                // phone co loi
                 $user = User::findOne(['email' => $user->getEmail()]);
                 $json = json_encode($user);
                 $user->errors = ['phone' => 'Please input the right phone with min of length is 8 numbers'];
@@ -197,7 +204,6 @@ class AuthController extends Controller
     public function uploadImageAjax(Request $request, Respone $respone)
     {
         //https://stackoverflow.com/questions/17327602/can-i-pass-image-form-data-to-a-php-function-for-upload
-
         if (isset($_FILES['imageFile'])) {
             $error = false;
             $image = $_FILES['imageFile'];
@@ -253,20 +259,21 @@ class AuthController extends Controller
                     $error  = "Only image files are allowed (jpg, gif, png)";
                 }
             }
+            $id = Application::$app->session->get('user');
+            $user = new User;
+            $user = User::findOneById(['id' => $id]);
             if (empty($error)) {
                 // update into database
-                $id = Application::$app->session->get('user');
                 $url = '../images/' . $image['name'];
-                $user = new User;
-                $user = User::findOneById(['id' => $id]);
                 $user = $user->setImage($url);
 
                 if ($user->upgradeImageById(['id' => $id], $user)) {
                     // upgrade anh success
-                    return [1 => json_encode($user)];
+                    return json_encode($user);
                 }
             } else {
-                return [0 => $error];
+                $user->errors[] = $error;
+                return json_encode($user);
             }
         }
     }
