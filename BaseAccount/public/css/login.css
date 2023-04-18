@@ -1,0 +1,141 @@
+.fullBox {
+    display: flex;
+}
+
+#loginBox {
+    display: block;
+    width: 40%;
+    padding: 15px;
+    margin: 15px
+}
+
+#loginBox .auth-logo {
+    text-align: center;
+    padding-bottom: 0px;
+    padding-top: 20px;
+}
+
+#loginBox .loginBox #authForm h1.login-title {
+    padding: 35px 0px 8px 0px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#loginBox .loginBox #authForm div.auth-sub-title1 {
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+#loginBox .loginBox #authForm div.form {
+    padding: 9px;
+}
+
+#loginBox .loginBox #authForm div.form div.label {
+    margin-left: -10px;
+    margin-top: 17px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#loginBox .loginBox #authForm div.form div.label div.float-end {
+    font-weight: normal !IMPORTANT;
+    font-size: 14px;
+    font-size: bold;
+}
+
+#loginBox .loginBox #authForm div.form .form-control {
+    font-size: 16px;
+    padding: 6px;
+    border-top: 1px solid #d3d3d3;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #d3d3d3;
+    border-bottom: 1px solid #ccc;
+}
+
+#loginBox .loginBox #authForm div.form div.relative {
+    position: relative;
+    padding-bottom: 30px;
+}
+
+#loginBox .loginBox #authForm div.form div.relative div.checkbox {
+    position: absolute;
+    font-size: 13px;
+    color: #888;
+    left: 0px;
+    top: 0px;
+}
+
+#loginBox .loginBox #authForm div.form div.relative button#submitLoginForm {
+    background-color: #2bd14e;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    padding: 11px 25px;
+    border-radius: 3px;
+    margin-top: 40px;
+    border: hidden;
+}
+
+#loginBox .loginBox #authForm div.form div#loginWays {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 50px;
+    border-bottom: 2px solid #eee;
+    margin: 0 -9px;
+}
+
+#loginBox .loginBox #authForm div.form div#loginWays div.auth-sub-title {
+    display: flex;
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px
+}
+
+#loginBox .loginBox #authForm div.form div#loginWays div.auth-sub-title div.fench {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    content: '';
+    flex: 1
+}
+
+#loginBox .loginBox #authForm div.form div#loginWays div.loginWays {
+    float: left;
+    text-align: center;
+}
+
+#loginBox .loginBox #authForm div.form div#loginWays div.loginWays button {
+    background-color: #f3f3f3;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 13px;
+    font-weight: normal;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    color: #267cde;
+    padding: 10px 10px;
+    border-radius: 3px;
+    margin-top: 20px;
+    width: 49%;
+}
+
+#loginBox .loginBox #authForm div.form div.rowRegister {
+    margin-top: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+#loginBox .loginBox #authForm div.form div.rowRegister a {
+    text-decoration: none;
+    text-align: center;
+    font-weight: normal;
+    color: #267cde;
+}

@@ -1,0 +1,69 @@
+#registerForm {
+    display: block;
+    width: 40%;
+    padding: 15px;
+    margin: 15px;
+    overflow: auto;
+}
+
+#registerForm div.auth-logo {
+    text-align: center;
+    padding-bottom: 0px;
+    padding-top: 20px;
+}
+
+#registerForm div.registerBox form#authform h1 {
+    padding: 35px 0px 8px 0px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#registerForm div.registerBox form#authform div.auth-sub-title {
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+#registerForm div.registerBox form#authform div.form div.row {
+    margin: 0 -2px
+}
+
+#registerForm div.registerBox form#authform div.form div.row div.label {
+    margin-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: -10px;
+}
+
+#registerForm div.registerBox form#authform div.form div.row input {
+    font-size: 16px;
+    padding: 6px
+}
+
+
+#registerForm div.registerBox form#authform div.form div.row div.checkbox {
+    position: absolute;
+    font-size: 13px;
+    color: #888;
+    left: 0px;
+    top: 0px;
+}
+
+#registerForm div.registerBox form#authform div.form div.row button#buttonAjax {
+    background-color: #2bd14e;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    padding: 11px 25px;
+    border-radius: 3px;
+    margin-top: 40px;
+    border: hidden;
+    width: 97%;
+    margin-left: 8px;
+}

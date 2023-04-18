@@ -1,0 +1,311 @@
+/* sticky label in the left */
+
+div#mainBox {
+    padding: 0;
+    display: flex;
+    flex-direction: row
+}
+
+#stickyLabelLeft {
+    width: 128px;
+    background-color: #211c23;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    transition-property: all;
+    position: sticky;
+    float: left
+}
+
+#stickyLabelRight {
+    position: relative;
+    width: 288px;
+    bottom: 0px;
+    right: 0px;
+    top: 0px;
+    color: #999;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f6f6f6;
+}
+
+#stickyLabelLeft div.itemAva {
+    position: relative;
+}
+
+#stickyLabelLeft div.itemAva div.boxInnerImage {
+    height: 51px;
+    text-align: center;
+    cursor: pointer
+}
+
+#stickyLabelLeft div.itemAva div.boxInnerImage div.innerImage {
+    width: 32px;
+    height: 32px;
+    margin: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#stickyLabelLeft div.itemAva div.boxInnerImage div.innerImage img#miniAvatar {
+    border: none;
+    overflow: hidden;
+    font-size: 10px;
+    color: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    display: block;
+}
+
+#stickyLabelLeft div.item {
+    position: relative;
+    padding: 5px
+}
+
+#stickyLabelLeft div.item {
+    position: relative;
+    padding: 5px
+}
+
+#stickyLabelLeft div.item div.iconLabel {
+    height: 41px;
+    text-align: center;
+    cursor: pointer
+}
+
+#stickyLabelLeft div.item div.iconLabel div.icon {
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#stickyLabelLeft div.item div.info {
+    font-weight: normal;
+    display: block;
+    color: #fff;
+    text-transform: none;
+    font-size: 13px;
+    position: relative;
+    top: auto;
+    left: auto;
+    background-color: transparent;
+    padding-top: 0px;
+    padding-bottom: 15px;
+    margin-top: -2px;
+    text-align: center;
+}
+
+
+/* navbar navigation and detail information */
+
+/* navbar navigation */
+div#navbarNavigation nav#navbarTutorial {
+    background-color: white;
+    border-bottom: 2px solid #eee;
+}
+
+a.nav-link-account {
+    text-transform: uppercase;
+    color: #ccc;
+    font-size: 11px;
+    font-weight: normal;
+    padding-bottom: 3px;
+    margin-bottom: -11px;
+}
+
+a.nav-link-name {
+    font-size: 18px;
+    font-weight: 300;
+    color: #222;
+}
+
+a.navbarIsGuest {
+    padding-top: 10px;
+    padding-right: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+ul#ulEditButton {
+    padding-top: 25px;
+    padding-right: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+ul#ulEditButton li.nav-item {
+    margin-top: -5px;
+}
+
+ul#ulEditButton li.nav-item button.btn-success {
+    border-radius: 4px;
+    padding: 6px 15px;
+    border: hidden;
+    background-color: #16bccf;
+}
+
+ul#ulEditButton li.nav-item button.btn-success i.fa-arrow-up {
+    font-size: 12px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+}
+
+/* detail infomation */
+
+/* avatar */
+img#uploadImageFinished {
+    border: #000;
+    z-index: 1;
+    position: relative;
+    border-width: 2px;
+    float: left;
+    border-radius: 50%
+}
+
+form#imageUploadForm input#imageMain {
+    display: none;
+    font-size: 10px;
+}
+
+/* content */
+
+div#contentBoxInfomation {
+    display: flex;
+    flex-direction: column
+}
+
+div#contentBoxInfomation div.contentBoxInfomationName {
+    font-size: 28px;
+}
+
+div#contentBoxInfomation div.contentBoxInfomation {
+    padding-right: 10px;
+    width: 20%;
+    color: #666;
+    font-weight: 500;
+    left: 0px;
+}
+
+div#subInformationBox {
+    display: flex;
+    margin-top: 30px;
+}
+
+div#subInformationBox div.subInformationBoxCenter {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+div#subInformationBox div.subInformationBoxCenter div.subInformationBoxCenterTitle {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+div#subInformationBox div.subInformationBoxCenter div.subInformationBoxCenterTitle div.mainTitle {
+    width: 100%;
+    font-weight: 500;
+    font-size: 13px;
+    color: #aaa;
+    position: relative;
+    text-transform: uppercase;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+div#subInformationBox div.subInformationBoxCenter div.subInformationBoxCenterTitle div.contactInfo {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    font-size: 14px;
+    padding: 13px 0 13px 0;
+    border-bottom: 1px dotted #ddd;
+}
+
+div#subInformationBox div.subInformationBoxCenter div.subInformationBoxCenterTitle div.contactInfo b.b-address {
+    font-weight: 500;
+    color: #888;
+    font-size: 13px;
+    top: 13px;
+    left: 0px;
+}
+
+div#subInformationBox div.subInformationBoxCenter div.subInformationBoxCenterTitle div.contactInfo div.url {
+    color: #7c32a1;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 17px
+}
+
+div#subInformationBox div.subInformationBoxCenter div.subInformationBoxCenterTitle div.contactInfo div.url div.info {
+    font-weight: normal;
+    font-size: 14px;
+    color: #999;
+}
+
+/* sticky label in the right */
+
+div#stickyLabelRight div.list {
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+div#stickyLabelRight div.list div.top {
+    padding: 12px 0px;
+    border-bottom: 2px solid #eee;
+    height: 74px;
+    box-sizing: border-box;
+}
+
+div#stickyLabelRight div.list div.top div.topContent {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+
+div#stickyLabelRight div.list div.top div.topContent div#nameTitle {
+    font-size: 22px;
+    font-weight: 300;
+    color: #111;
+}
+
+div#stickyLabelRight div.list div.top div.topContent div#emailTitle {
+    font-weight: normal;
+    font-size: 14px;
+    padding-top: 4px;
+}
+
+div#stickyLabelRight div.list div.top div.title {
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #999;
+    padding: 20px 15px 15px 20px;
+    margin-left: -9px;
+}
+
+/* modal popup */
+div.modal-footer {
+    overflow: hidden;
+    padding-top: 20px;
+    border-top: 1px dashed #ddd;
+    margin-top: 5px
+}
+
+div.modal-footer button.btn-secondary {
+    float: right;
+    padding: 11px 0px;
+    width: 48%;
+}
+
+div.modal-footer button.buttonAjax {
+    float: left;
+    padding: 11px 0px;
+    width: 48%;
+}

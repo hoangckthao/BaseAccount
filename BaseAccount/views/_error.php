@@ -1,4 +1,7 @@
-<?php ?>
+  
+</head>
+
+<body>  
 <div class="container" style="display: block;">
     <div class="alert alert-danger" role="alert">
         <h1>
