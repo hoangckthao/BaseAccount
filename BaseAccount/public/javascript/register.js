@@ -70,7 +70,7 @@ $(document).ready(function (e) {
 
                 } else {
                     alert("Register successfull!")
-                    window.location.href = "http://localhost:8080/login";
+                    window.location.href = "/login";
                 }
 
 

@@ -1,9 +1,10 @@
 <?php 
 
-namespace app\models;
+namespace app\core\form;
 
 use app\core\Application;
 use app\core\Model;
+use app\models\User;
 
 class LoginForm extends Model
 {

@@ -9,9 +9,9 @@ class m0001_initial
         $db = Application::$app->db;
         $SQL = "CREATE TABLE IF NOT EXISTS `user` (
             `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            `firstName` text NOT NULL,
-            `lastName` text NOT NULL,
-            `email` text NOT NULL UNIQUE,
+            `firstName` varchar(250) NOT NULL,
+            `lastName` varchar(250) NOT NULL,
+            `email` varchar(250) NOT NULL UNIQUE,
             `password` varchar(250) NOT NULL,
             `phone` varchar(20) DEFAULT NULL,
             `address` text DEFAULT NULL,

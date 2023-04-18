@@ -7,13 +7,13 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\DbModel;
 use app\core\exception\UpgradePasswordException;
+use app\core\form\ForgotPasswordForm;
+use app\core\form\LoginForm;
 use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
 use app\core\Respone;
-use app\models\ForgotPassword;
-use app\models\LoginForm;
 use app\models\User;
-use app\models\ForgotPasswordForm;
+
 
 class AuthController extends Controller
 {

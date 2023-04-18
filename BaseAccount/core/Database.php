@@ -69,10 +69,7 @@ class Database
     }
 
     public function saveMigrations(array $migrations)
-    {
-        //var_dump($migrations).PHP_EOL; // "m0001_initial.php" 
-        //$migrations = array_map(fn($m) => "('$m')", $migrations);
-        //var_dump($migrations).PHP_EOL; //"('m0001_initial.php')"
+    {     
         $str = implode(",", array_map(fn($m) => "('$m')", $migrations));
         echo "str la: ";
         var_dump($str) . PHP_EOL;

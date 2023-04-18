@@ -1,17 +1,19 @@
 <?php
 
-namespace app\models;
+namespace app\core\form;
 
 use app\core\Application;
 use app\core\Model;
+use app\models\User;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require('C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\phpmailer\src\Exception.php');
-require('C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\phpmailer\src\PHPMailer.php');
-require('C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\phpmailer\src\SMTP.php');
+require(dirname(dirname(__DIR__)).'\phpmailer\src\PHPMailer.php');
+require(dirname(dirname(__DIR__)).'\phpmailer\src\Exception.php');
+require(dirname(dirname(__DIR__)).'\phpmailer\src\SMTP.php');
+
 class ForgotPasswordForm extends Model
-{
+{    
     public string $email = '';
     public function rules(): array
     {
@@ -21,7 +23,7 @@ class ForgotPasswordForm extends Model
     }
 
     public function checkEmailExits()
-    {
+    {        
         // $userMain = new User();   
         // $userMain->setEmail($this->email) ;
         $user = User::findOne(['email' => $this->email]);
@@ -33,7 +35,7 @@ class ForgotPasswordForm extends Model
         return true;
     }
     public function sendMailChangePassword()
-    {
+    {        
         $email = $this->email;
 
         // Tạo một chuỗi ngẫu nhiên
