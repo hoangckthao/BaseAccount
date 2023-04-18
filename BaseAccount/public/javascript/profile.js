@@ -24,8 +24,10 @@ $(document).ready(function (e) {
                 console.log(JSON.parse(data));
                 var dataReturn = JSON.parse(data);
 
-                document.getElementById('uploadImageFinished').setAttribute("src", dataReturn['image']);
-                document.getElementById('miniAvatar').setAttribute("src", dataReturn['image']);
+                //document.getElementById('uploadImageFinished').setAttribute("src", dataReturn['image']);
+                $('#uploadImageFinished').attr("src", dataReturn['image']); 
+                //document.getElementById('miniAvatar').setAttribute("src", dataReturn['image']);
+                $('#miniAvatar').attr("src", dataReturn['image']);
             },
             error: function (xhr, status, error) {
                 console.log(error);

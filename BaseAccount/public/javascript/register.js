@@ -20,52 +20,52 @@ $(document).ready(function (e) {
             success: function (data) {
                 if (data['errors'].length != 0) {
                     if (data['errors']['firstName']) {
-                        document.getElementById("firstName-warning").innerHTML = data['errors']['firstName'];
+                        $("#firstName-warning").html(data['errors']['firstName']);
                     }
                     else {
-                        document.getElementById("firstName-warning").innerHTML = '';
+                        $("#firstName-warning").html('');
                     }
 
                     if (data['errors']['lastName']) {
-                        document.getElementById("lastName-warning").innerHTML = data['errors']['lastName'];
+                        $("#lastName-warning").html(data['errors']['lastName']);
                     }
                     else {
-                        document.getElementById("lastName-warning").innerHTML = '';
+                        $("#lastName-warning").html('');
                     }
 
                     if (data['errors']['email']) {
-                        document.getElementById("email-warning").innerHTML = data['errors']['email'];
+                        $("#email-warning").html(data['errors']['email']);
                     }
                     else {
-                        document.getElementById("email-warning").innerHTML = '';
+                        $("#email-warning").html('');
                     }
 
                     if (data['errors']['password']) {
-                        document.getElementById("password-warning").innerHTML = data['errors']['password'];
+                        $("#password-warning").html(data['errors']['password']);
                     }
                     else {
-                        document.getElementById("password-warning").innerHTML = '';
+                        $("#password-warning").html('');
                     }
 
                     if (data['errors']['passwordConfirm']) {
-                        document.getElementById("passwordConfirm-warning").innerHTML = data['errors']['passwordConfirm'];
+                        $("#passwordConfirm-warning").html(data['errors']['passwordConfirm']);
                     }
                     else {
-                        document.getElementById("passwordConfirm-warning").innerHTML = '';
+                        $("#passwordConfirm-warning").html('');
                     }
 
                     if (data['errors']['phone']) {
-                        document.getElementById("phone-warning").innerHTML = data['errors']['phone'];
+                        $("#phone-warning").html(data['errors']['phone']);
                     }
                     else {
-                        document.getElementById("phone-warning").innerHTML = '';
+                        $("#phone-warning").html();
                     }
 
                     if (data['errors']['address']) {
-                        document.getElementById("address-warning").innerHTML = data['errors']['address'];
+                        $("#address-warning").html(data['errors']['address']);
                     }
                     else {
-                        document.getElementById("address-warning").innerHTML = '';
+                        $("#address-warning").html('');
                     }
 
                 } else {

@@ -23,9 +23,7 @@ class ForgotPasswordForm extends Model
     }
 
     public function checkEmailExits()
-    {        
-        // $userMain = new User();   
-        // $userMain->setEmail($this->email) ;
+    {                
         $user = User::findOne(['email' => $this->email]);
 
         if (!$user || $user->validate()) {

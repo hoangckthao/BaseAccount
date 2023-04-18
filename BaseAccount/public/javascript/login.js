@@ -16,17 +16,21 @@ $(document).ready(function () {
                 //data =JSON.parse(data);                    
                 if (data['errors'].length != 0) {
                     if (data['errors']['email']) {
-                        document.getElementById("email-warning").innerHTML = data['errors']['email'];
+                        //document.getElementById("email-warning").innerHTML = data['errors']['email'];
+                        $("#email-warning").html(data['errors']['email']);
 
                     }
                     else {
-                        document.getElementById("email-warning").innerHTML = '';
+                        $("#email-warning").html('');
+                        //document.getElementById("email-warning").innerHTML = '';
                     }
                     if (data['errors']['password']) {
-                        document.getElementById("password-warning").innerHTML = data['errors']['password'];
+                        $("#password-warning").html(data['errors']['password']);
+                        //document.getElementById("password-warning").innerHTML = data['errors']['password'];
                     }
                     else {
-                        document.getElementById("password-warning").innerHTML = '';
+                        $("#password-warning").html('');
+                        //document.getElementById("password-warning").innerHTML = '';
                     }
                 }
                 else {
