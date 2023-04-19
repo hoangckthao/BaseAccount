@@ -1,4 +1,4 @@
 <?php
-require_once(__DIR__.'\autoloadManual.php');
-require(__DIR__.'\define.php');
+require_once(dirname(__DIR__).'\core\condition\AutoloadManual.php');
+require(dirname(__DIR__).'\core\condition\Define.php');
 ?>

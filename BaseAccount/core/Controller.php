@@ -27,5 +27,23 @@ class Controller
     public function getMiddleware() :array {
         return $this->middlewares;
     }
+
+    public function getPathAbsolute($link) {
+        $rootPath = dirname(__DIR__);
+        $fullPath = $rootPath.$link;        
+        return $fullPath;
+    }
+
+    public function getPathRelative($link) {
+        $rootPath = '../';
+        $fullPath = $rootPath.$link;        
+        return $fullPath;
+    }
+
+    public function getPathApi($link) {
+        $rootPath = '/';
+        $fullPath = $rootPath.$link;        
+        return $fullPath;
+    }
 }
 ?>

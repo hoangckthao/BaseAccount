@@ -109,6 +109,8 @@
                                     <?php
 
                                     use app\core\Application;
+                                    use app\core\Controller;
+                                    $controller = new Controller;
 
                                     if (!Application::isGuest()) {
                                     ?>
@@ -479,4 +481,4 @@
 
     </div>
 
-    <script type="text/javascript" src="../javascript/profile.js"></script>
+    <script type="text/javascript" src=" <?php echo $controller->getPathRelative('javascript/profile.js') ?>"></script>

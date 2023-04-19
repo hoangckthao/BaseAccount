@@ -25,28 +25,28 @@ class AuthController extends Controller
     public function loginWithAjax(Request $request, Respone $respone)
     {
         $loginForm = new LoginForm();
-        if ($request->isPost()) {
-            $loginForm->loadData($request->getBody());
-            if ($loginForm->validate()) {
-                if ($loginForm->login()) {
-                    $emailLogin = $loginForm->{'email'};
-                    $userP = User::findOne(['email' => $emailLogin]);
-                    $json = json_encode($userP);
-                    return $json;
-                } else {
-                    // login failed
-                    $json = json_encode($loginForm);
-                    return $json;
-                }
-            }
+        if (!$request->isPost()) {
+            //get request
+            $this->setLayout('auth');
+            return $this->render('login', [
+                'model' => $loginForm,
+            ]);
+        }
+        $loginForm->loadData($request->getBody());
+        if (!$loginForm->validate()) {
             // validate failed
             $json = json_encode($loginForm);
             return $json;
         }
-        $this->setLayout('auth');
-        return $this->render('login', [
-            'model' => $loginForm,
-        ]);
+        if (!$loginForm->login()) {
+            // login failed
+            $json = json_encode($loginForm);
+            return $json;
+        }
+        $emailLogin = $loginForm->{'email'};
+        $userP = User::findOne(['email' => $emailLogin]);
+        $json = json_encode($userP);
+        return $json;
     }
 
     public function profileWithAjax(Request $request, Respone $respone)
@@ -63,22 +63,22 @@ class AuthController extends Controller
     public function registerWithAjax(Request $request, Respone $respone)
     {
         $user = new User();
-        if ($request->isPost()) {
-            $user->loadData($request->getBody());
-            if ($user->validate()) {
-                $user->save();
-                $json = json_encode($user);
-                return $json;
-            } else {
-                //validate failed, return error and dont save
-                $json = json_encode($user);
-                return $json;
-            }
+        if (!$request->isPost()) {
+
+            $this->setLayout('auth');
+            return $this->render('register', [
+                'model' => $user,
+            ]);
         }
-        $this->setLayout('auth');
-        return $this->render('register', [
-            'model' => $user,
-        ]);
+        $user->loadData($request->getBody());
+        if (!$user->validate()) {
+            //validate failed, return error and dont save
+            $json = json_encode($user);
+            return $json;
+        }
+        $user->save();
+        $json = json_encode($user);
+        return $json;
     }
 
     public function logout(Request $request, Respone $respone)
@@ -102,39 +102,39 @@ class AuthController extends Controller
     {
         $forgotPasswordForm = new ForgotPasswordForm();
         $user = new User();
-        if ($request->isPost()) {
+        if (!$request->isPost()) {
+            //get method
+            $this->setLayout('auth');
+            return $this->render('forgotPassword', ['model' => $user]);
+        }
+        $forgotPasswordForm->loadData($request->getBody());
 
-            $forgotPasswordForm->loadData($request->getBody());
-            if ($forgotPasswordForm->validate()) {
-                if ($forgotPasswordForm->checkEmailExits()) {
-                    $emailRecover = $forgotPasswordForm->{'email'};
-                    if (($passwordChanged = $forgotPasswordForm->sendMailChangePassword()) !== null) {
-                        $user = User::findOne(['email' => $emailRecover]);
-                        $passwordChanged = password_hash($passwordChanged, PASSWORD_DEFAULT);
-                        if ($user->upgradePasswordByEmail(['password' => $passwordChanged], $user)) {
+        if (!$forgotPasswordForm->validate()) {
+            // email is validate failed  
+            $json = json_encode($forgotPasswordForm);
+            return $json;
+        }
+        if (!$forgotPasswordForm->checkEmailExits()) {
+            //email is not exits
+            $json = json_encode($forgotPasswordForm);
+            return $json;
+        }
+        $emailRecover = $forgotPasswordForm->{'email'};
 
-                            $json = json_encode($user);
-                            return $json;
-                        }
-                        //update pass failed
-                        $json = json_encode($forgotPasswordForm);
-                        return $json;
-                    }
-                    //send email failed
-                    $json = json_encode($forgotPasswordForm);
-                    return $json;
-                }
-                //email is not exits
-                $json = json_encode($forgotPasswordForm);
-                return $json;
-            } else {
-                // email is validate failed  
-                $json = json_encode($forgotPasswordForm);
+        if (($passwordChanged = $forgotPasswordForm->sendMailChangePassword()) !== null) {
+            $user = User::findOne(['email' => $emailRecover]);
+            $passwordChanged = password_hash($passwordChanged, PASSWORD_DEFAULT);
+            if ($user->upgradePasswordByEmail(['password' => $passwordChanged], $user)) {
+                $json = json_encode($user);
                 return $json;
             }
+            //update pass failed
+            $json = json_encode($forgotPasswordForm);
+            return $json;
         }
-        $this->setLayout('auth');
-        return $this->render('forgotPassword', ['model' => $user]);
+        //send email failed
+        $json = json_encode($forgotPasswordForm);
+        return $json;
     }
 
     public function editProfileAjax(Request $request, Respone $respone)
@@ -144,42 +144,11 @@ class AuthController extends Controller
         $user->loadData($request->getBody());
 
         $userP = User::findOne(['email' => $user->getEmail()]);
-        if ($request->isPost()) {
-            if ($user->validatePhone()) {
-
-                $errorCheck = array();
-                $errorCheck = $this->uploadImageAjax($request, $respone);
-                $errorCheck = json_decode($errorCheck);
-
-                if (!empty($errorCheck->errors)) {
-                    //co loi
-                    //upgrade anh failed
-                    $user = User::findOne(['email' => $user->getEmail()]);
-                    $user->errors = ['image' => $errorCheck->errors[0]];
-                    $json = json_encode($user);
-                    // var_dump($json);
-                    // die();
-                    echo $json;
-                    return;
-                }
-
-                // khong co loi
-                //upgrade anh thanh cong
-                if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
-                    //upgrade toan bo thanh cong 
-                    $user = User::findOne(['email' => $user->getEmail()]);
-                    $json = json_encode($user);
-                    echo $json;
-                    return;
-                } else {
-                    // upgrade tat ca failed
-                    $user = User::findOne(['email' => $user->getEmail()]);
-                    $user->errors = ['all' => 'Update errors, please try again'];
-                    $json = json_encode($user);
-                    echo $json;
-                    return;
-                }
-            }
+        if (!$request->isPost()) {
+            $this->setLayout('auth');
+            return $this->render('profile', ['userP' => $userP]);
+        }
+        if (!$user->validatePhone()) {
             // phone co loi
             $user = User::findOne(['email' => $user->getEmail()]);
             $json = json_encode($user);
@@ -187,9 +156,38 @@ class AuthController extends Controller
             echo $json;
             return;
         }
+        $errorCheck = array();
+        $errorCheck = $this->uploadImageAjax($request, $respone);
+        $errorCheck = json_decode($errorCheck);
 
-        $this->setLayout('auth');
-        return $this->render('profile', ['userP' => $userP]);
+        if (!empty($errorCheck->errors)) {
+            //co loi
+            //upgrade anh failed
+            $user = User::findOne(['email' => $user->getEmail()]);
+            $user->errors = ['image' => $errorCheck->errors[0]];
+            $json = json_encode($user);
+            // var_dump($json);
+            // die();
+            echo $json;
+            return;
+        }
+
+        // khong co loi
+        //upgrade anh thanh cong
+        if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
+            //upgrade toan bo thanh cong 
+            $user = User::findOne(['email' => $user->getEmail()]);
+            $json = json_encode($user);
+            echo $json;
+            return;
+        } else {
+            // upgrade tat ca failed
+            $user = User::findOne(['email' => $user->getEmail()]);
+            $user->errors = ['all' => 'Update errors, please try again'];
+            $json = json_encode($user);
+            echo $json;
+            return;
+        }
     }
 
     public function uploadImageAjax(Request $request, Respone $respone)
@@ -200,7 +198,7 @@ class AuthController extends Controller
             $image = $_FILES['imageFile'];
             $code = (int)$image["error"];
             $valid = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
-            $folder = 'C:\Users\BASEVN\Desktop\BaseAccount\BaseAccount\public\images\\';
+            $folder = $this->getPathAbsolute('\public\images\\');                        
             $target = $folder . $image['name'];
             //require_once(__DIR__ . '\vendor\autoload.php');
 
@@ -253,19 +251,19 @@ class AuthController extends Controller
             $id = Application::$app->session->get('user');
             $user = new User;
             $user = User::findOneById(['id' => $id]);
-            if (empty($error)) {
-                // update into database
-                $url = '../images/' . $image['name'];
-                $user = $user->setImage($url);
-
-                if ($user->upgradeImageById(['id' => $id], $user)) {
-                    // upgrade anh success
-                    return json_encode($user);
-                }
-            } else {
+            if (!empty($error)) {
                 $user->errors[] = $error;
+                return json_encode($user);
+            }
+            // update into database
+            $url = $this->getPathRelative('images/') . $image['name'];            
+            $user = $user->setImage($url);
+
+            if ($user->upgradeImageById(['id' => $id], $user)) {
+                // upgrade anh success
                 return json_encode($user);
             }
         }
     }
+    
 }

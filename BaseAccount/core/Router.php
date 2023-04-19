@@ -80,8 +80,8 @@ class Router
             $layout = Application::$app->controller->layout;
         }
 
-        ob_start();
-        include_once(Application::$ROOT_DIR . "/views/layouts/$layout.php");
+        ob_start();        
+        include_once(dirname(Application::$ROOT_DIR). "/views/layouts/$layout.php");
         return ob_get_clean();
     }
 
@@ -91,7 +91,7 @@ class Router
             $$key = $value; // $key = name => $$key = $name
         }
         ob_start();
-        include_once(Application::$ROOT_DIR . "/views/$view.php");
+        include_once(dirname(Application::$ROOT_DIR) . "/views/$view.php");
         return ob_get_clean();
     }
 }

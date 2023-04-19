@@ -6,7 +6,7 @@
         <div id="registerForm" name="registerPage">
             <div class="auth-logo">
                 <a href="https://base.vn/">
-                    <img src="../images/logo.full.png">
+                    <img src="<?php use app\core\Controller; $controller = new Controller; echo $controller->getPathRelative('images/logo.full.png') ?>">
                 </a>
             </div>
             <div class="registerBox">
@@ -79,8 +79,8 @@
 
         </div>
         <div>
-            <img style="max-width: 100%; height: auto;" src="../images/background.png" alt="Hinh anh minh hoa">
+            <img style="max-width: 100%; height: auto;" src="<?php echo $controller->getPathRelative('images/background.png') ?>" alt="Hinh anh minh hoa">
         </div>
     </div>
 
-    <script type="text/javascript" src="../javascript/register.js"></script>
+    <script type="text/javascript" src=" <?php echo $controller->getPathRelative('javascript/register.js') ?> "></script>
