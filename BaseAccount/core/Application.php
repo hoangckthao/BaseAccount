@@ -1,6 +1,7 @@
 <?php
 namespace app\core;
 
+use app\core\DbModel;
 use UserModel;
 use app\models\User;
 use Exception;

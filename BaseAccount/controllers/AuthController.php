@@ -34,13 +34,14 @@ class AuthController extends Controller
                     $json = json_encode($userP);
                     return $json;
                 } else {
+                    // login failed
                     $json = json_encode($loginForm);
                     return $json;
                 }
-            } else {
-                $json = json_encode($loginForm);
-                return $json;
             }
+            // validate failed
+            $json = json_encode($loginForm);
+            return $json;
         }
         $this->setLayout('auth');
         return $this->render('login', [
@@ -65,14 +66,11 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $user->loadData($request->getBody());
             if ($user->validate()) {
-                if ($user->save()) {
-                    $json = json_encode($user);
-                    return $json;
-                } else {
-                    $json = json_encode($user);
-                    return $json;
-                }
+                $user->save();
+                $json = json_encode($user);
+                return $json;
             } else {
+                //validate failed, return error and dont save
                 $json = json_encode($user);
                 return $json;
             }
@@ -117,22 +115,18 @@ class AuthController extends Controller
 
                             $json = json_encode($user);
                             return $json;
-                        } else {
-                            //update pass failed
-                            $json = json_encode($forgotPasswordForm);
-                            return $json;
                         }
-                    } else {
-                        //send email failed
-
+                        //update pass failed
                         $json = json_encode($forgotPasswordForm);
                         return $json;
                     }
-                } else {
-                    //email is not exits
+                    //send email failed
                     $json = json_encode($forgotPasswordForm);
                     return $json;
                 }
+                //email is not exits
+                $json = json_encode($forgotPasswordForm);
+                return $json;
             } else {
                 // email is validate failed  
                 $json = json_encode($forgotPasswordForm);
@@ -157,7 +151,6 @@ class AuthController extends Controller
                 $errorCheck = $this->uploadImageAjax($request, $respone);
                 $errorCheck = json_decode($errorCheck);
 
-
                 if (!empty($errorCheck->errors)) {
                     //co loi
                     //upgrade anh failed
@@ -168,33 +161,31 @@ class AuthController extends Controller
                     // die();
                     echo $json;
                     return;
-                } 
-                else {
-                    // khong co loi
-                    //upgrade anh thanh cong
-                    if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
-                        //upgrade toan bo thanh cong 
-                        $user = User::findOne(['email' => $user->getEmail()]);
-                        $json = json_encode($user);
-                        echo $json;
-                        return;
-                    } else {
-                        // upgrade tat ca failed
-                        $user = User::findOne(['email' => $user->getEmail()]);
-                        $user->errors = ['all' => 'Update errors, please try again'];
-                        $json = json_encode($user);
-                        echo $json;
-                        return;
-                    }
                 }
-            } else {
-                // phone co loi
-                $user = User::findOne(['email' => $user->getEmail()]);
-                $json = json_encode($user);
-                $user->errors = ['phone' => 'Please input the right phone with min of length is 8 numbers'];
-                echo $json;
-                return;
+
+                // khong co loi
+                //upgrade anh thanh cong
+                if ($user->upgradeByEmail(['email' => $user->getEmail()], $user)) {
+                    //upgrade toan bo thanh cong 
+                    $user = User::findOne(['email' => $user->getEmail()]);
+                    $json = json_encode($user);
+                    echo $json;
+                    return;
+                } else {
+                    // upgrade tat ca failed
+                    $user = User::findOne(['email' => $user->getEmail()]);
+                    $user->errors = ['all' => 'Update errors, please try again'];
+                    $json = json_encode($user);
+                    echo $json;
+                    return;
+                }
             }
+            // phone co loi
+            $user = User::findOne(['email' => $user->getEmail()]);
+            $json = json_encode($user);
+            $user->errors = ['phone' => 'Please input the right phone with min of length is 8 numbers'];
+            echo $json;
+            return;
         }
 
         $this->setLayout('auth');

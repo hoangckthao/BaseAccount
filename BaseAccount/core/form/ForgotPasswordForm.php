@@ -54,7 +54,7 @@ class ForgotPasswordForm extends Model
         $mail->Host       = "smtp.gmail.com";
         //$mail->Host       = "smtp.mail.yahoo.com";
         $mail->Username   = "hoangckthao33@gmail.com";
-        $mail->Password   = "mkvcqcmqwkhoeenb";
+        $mail->Password   = "mkvcqcmqwkhoeenb"; // dang off
         $mail->SMTPSecure = 'ssl';
 
         $mail->IsHTML(true);
